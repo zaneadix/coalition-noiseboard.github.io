@@ -3,23 +3,16 @@ import Github from 'github-api';
 
 export const hydrate = ({ commit, state }) => {
 
-    const gh = new Github();
-    console.log(gh);
-
-    const zaneadix = gh.getUser('zaneadix');
-    const repo = gh.getRepo('zaneadix/zaneadix.github.io');
-
-
-
-    console.log(zaneadix);
-    console.log(repo);
-
-    zaneadix.listRepos().then(result => {
-        console.log(result);
-    })
+    const gh = new Github({
+        username: 'zaneadix',
+        password: 'octocat6'
+    });
+    const repo = gh.getRepo('zaneadix/coalition-noiseboard');
 
     repo.getTree("master?recursive=1&path=archives").then(result => {
         console.log(result.data.tree);
+
+        commit('hydrate', result.data.tree);
     })
 
     
