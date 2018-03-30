@@ -1,41 +1,28 @@
 {
   "name": "coalition-noiseboard",
-  "version": "0.1.0",
-  "private": true,
+  "version": "1.0.0",
+  "description": "Noises for shows.",
+  "main": "index.js",
+  "author": "Zane Adickes <zaneadix@gmail.com> (https://github.com/zaneadix)",
+  "license": "MIT",
   "scripts": {
-    "serve": "vue-cli-service serve --open",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "start": "webpack-dev-server --mode development --open",
+    "build": "webpack --mode production"
   },
   "dependencies": {
-    "vue": "^2.5.13"
-  },
-  "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.0.0-beta.6",
-    "@vue/cli-plugin-eslint": "^3.0.0-beta.6",
-    "@vue/cli-service": "^3.0.0-beta.6",
-    "vue-template-compiler": "^2.5.13"
-  },
-  "babel": {
-    "presets": [
-      "@vue/app"
-    ]
-  },
-  "eslintConfig": {
-    "root": true,
-    "extends": [
-      "plugin:vue/essential",
-      "eslint:recommended"
-    ]
-  },
-  "postcss": {
-    "plugins": {
-      "autoprefixer": {}
-    }
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 8"
-  ]
+    "copy-webpack-plugin": "4.5.0",
+    "github-api": "3.0.0",
+    "howler": "2.0.9",
+    "lodash-es": "4.17.7",
+    "node-sass": "4.7.2",
+    "sass-loader": "6.0.7",
+    "style-loader": "0.20.3",
+    "vue": "2.5.13",
+    "vue-loader": "14.1.1",
+    "vue-template-compiler": "2.5.13",
+    "vuex": "3.0.1",
+    "webpack": "4",
+    "webpack-cli": "2.0.10",
+    "webpack-dev-server": "3.1.1"
+  }
 }
