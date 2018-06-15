@@ -10,6 +10,7 @@
     "build": "webpack --mode production"
   },
   "dependencies": {
+    "bootstrap": "4.1.1",
     "copy-webpack-plugin": "4.5.0",
     "github-api": "3.0.0",
     "howler": "2.0.9",
