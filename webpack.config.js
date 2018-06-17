@@ -29,5 +29,8 @@ module.exports = {
             to: '',
             flatten: true
         }])
-    ]
+    ],
+    devServer: {
+        historyApiFallback: true
+    }
 };
