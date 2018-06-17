@@ -23,14 +23,16 @@ module.exports = {
             }
         ]
     },
-    plugins: [
-        new CopyPlugin([{
-            from: 'src/assets/**/*',
-            to: '',
-            flatten: true
-        }])
-    ],
+    // plugins: [
+    //     new CopyPlugin([{
+    //         from: 'src/assets/*.html',
+    //         to: '',
+    //         flatten: true,
+    //         toType: 'file'
+    //     }])
+    // ],
     devServer: {
+        contentBase: 'docs',
         historyApiFallback: true
     }
 };
