@@ -13,7 +13,7 @@ export const parseNoises = ({ commit, state }, tree) => {
 
     const noiseMap = {};
     map(noises, noise => {
-        let path = noise.path.replace('docs/', '');
+        const path = noise.path.replace('docs/', '');
         const segments = path.split('/');
         const category = segments[1];
         const name = segments[2].replace(/\.\w{3}/, '');
