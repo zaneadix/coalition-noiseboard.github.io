@@ -13,14 +13,14 @@ export const parseNoises = ({ commit, state }, tree) => {
 
     const noiseMap = {};
     map(noises, noise => {
-        let path = noise.path.replace('docs/noises/', '');
+        let path = noise.path.replace('docs/', '');
         const segments = path.split('/');
-        const category = segments[0];
-        const name = segments[1].replace(/\.\w{3}/, '');
+        const category = segments[1];
+        const name = segments[2].replace(/\.\w{3}/, '');
         noiseMap[category] = noiseMap[category] || [];
         noiseMap[category].push(Object.assign(
             new Noise(),
-            { name, category, path: noise.path }
+            { name, category, path: path }
         ));
     });
     
