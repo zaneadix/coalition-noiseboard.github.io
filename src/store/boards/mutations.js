@@ -1,5 +1,5 @@
 import Vue from 'vue';
 
-export const setNoises = (state, noises) => {
-    Vue.set(state, 'noises', noises);
+export const setBoards = (state, boards) => {
+    Vue.set(state, 'boards', boards);
 }

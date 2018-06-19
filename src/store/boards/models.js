@@ -2,7 +2,8 @@
 export class Board {
     
     constructor () {
-
+        this._name = '',
+        this.id = '',
         this.keys = {
             '1': null,
             '2': null,
@@ -41,5 +42,14 @@ export class Board {
             y: null,
             z: null
         }
+    }
+
+    set name (name) {
+        this.id = name.toLowercase().replace(/\s/g, '_');
+        this._name = name;
+    }
+
+    get name () {
+        return this._name;
     }
 }

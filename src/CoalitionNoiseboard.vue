@@ -9,13 +9,15 @@
                 </svg>
                 <span class="name">Coalition<br>Noiseboard</span>
             </div>
+
+            <ul>
+                <li><a href="">Songs</a></li>
+            </ul>
             <BoardsList></BoardsList>
         </div>
         
         <div class="content">
-            <div class="container">
-                <router-view></router-view>
-            </div>
+            <router-view></router-view>
         </div>
         
     </div>
@@ -87,9 +89,12 @@
 
             .brand {
                 display: flex;
-                padding: 1rem;
+                padding-left: 1rem;
                 border-bottom: 1px solid $white; 
                 margin-bottom: 1rem;
+                align-items: center;
+                height: 5rem;
+
                 .logo {
                     height: 3rem;
                     width: 3rem;
@@ -99,7 +104,6 @@
                 .name {
                     font-size: 1.3rem;
                     line-height: 1.4rem;
-                    margin-top: auto;
                 }
             }
 

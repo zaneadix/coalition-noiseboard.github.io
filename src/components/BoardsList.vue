@@ -2,13 +2,10 @@
 <template>
     
     <div class="boards-list">
-        <ul>
+        <ul v-if="boards">
             <li class="title"><strong>Boards</strong></li>
-            <li>
-                <router-link to="/board/scotch_on_the_rocks">Scotch on the Rocks</router-link>
-            </li>
-            <li>
-                <router-link to="/board/wild_frontier">Wild Frontier</router-link>
+            <li v-for="board in boards">
+                <router-link :to="'/board/'+board.id">{{board.name}}</router-link>
             </li>
         </ul>
     </div>
@@ -18,30 +15,18 @@
 <script>
 
     import { mapState, mapActions } from 'vuex';
-    import { routerLink } from 'vue-router';
     
     export default {
         name: 'boards-list',
-        props: ['data'],
-        compouted: {
+        computed: {
             ...mapState({
-                // noiseCategories: state => {
-                //     return Object.getOwnPropertyNames(state.noises);
-                // },
-                // noises: state =>  {
-                //     return state.noises;
-                // }
+                boards: state => {
+                    console.log('got boards', state);
+                    return state.boards;
+                }
             })
         },
-        methods: {
-            // playNoise: function (noise) {
-            //     var sound = new Howl({
-            //         src: [noise.path],
-            //         autoplay: true,
-            //         volume: 1,
-            //     });
-            // }
-        }
+        methods: {}
     }
 
 </script>

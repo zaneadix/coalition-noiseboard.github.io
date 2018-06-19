@@ -2,7 +2,9 @@
 <template>
     
     <div class="board">
-        <h1>{{ 'BOARD NAME' }}</h1>
+        <div class="header">
+            <h1 class="name">{{ board.name }}</h1>
+        </div>
     </div>
     
 </template>
@@ -11,12 +13,21 @@
 
     import { mapState, mapActions } from 'vuex';
     import { routerLink } from 'vue-router';
+    import find from 'lodash/find';
     
     export default {
         name: 'boards-list',
-        props: ['data'],
         computed: {
             ...mapState({
+                board: function (state) {
+                    console.log(this.$route.params);
+
+                    const id = this.$route.params.id;
+
+                    return find(state.boards, (board) => {
+                        return board.id === id;
+                    });
+                }
                 // noiseCategories: state => {
                 //     return Object.getOwnPropertyNames(state.noises);
                 // },
@@ -39,7 +50,21 @@
 </script>
 
 
-<style>
-    
+<style lang="scss">
+
+    .header {
+        height: 5rem;
+        display: flex;
+        justify-content: center;
+
+        .name {
+            text-align: center;
+            margin-bottom: 0;
+            margin-top: auto;
+            font-size: 2rem;
+            line-height: 2rem;
+
+        }
+    }
 
 </style>
