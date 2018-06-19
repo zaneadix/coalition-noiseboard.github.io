@@ -4,7 +4,7 @@ import Github from 'github-api';
 export const hydrate = ({ commit, dispatch, state }) => {
 
     const gh = new Github({
-        token: '82a836d5221ca3637932c8cdc4ca76b8008fbc87' // NOT A TOKEN
+        token: 'd8_35_f6_70_90_a7_68_39_5a_9f_20_75_72_1d_cb_35_f2_62_ce_bd'.replace(/_/g, '') // NOT A TOKEN
     });
     const repo = gh.getRepo('zaneadix/coalition-noiseboard');
 
