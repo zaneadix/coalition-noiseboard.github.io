@@ -2,21 +2,23 @@
 <template>
     
     <div class="noise-inventory">
-
-        <div class="noise-category" v-for="category in noiseCategories">
-            <h3>{{ category }}</h3>
-            <div class="row">
-                <div class="col-3" v-for="noise in noises[category]">
-                    <div class="noise-card">
-                        <div class="header">
-                            <h6 class="name">{{ noise.name }}</h6>
-                        </div>
-                        <div class="actions">
-                            <button class="icon-button" v-on:click="playNoise(noise)">
-                                <svg class="icon">
-                                    <use xlink:href="#icon-play"></use>
-                                </svg>
-                            </button>
+        
+        <div class="container">
+            <div class="noise-category" v-for="category in noiseCategories">
+                <h3>{{ category }}</h3>
+                <div class="row">
+                    <div class="col-3" v-for="noise in noises[category]">
+                        <div class="noise-card">
+                            <div class="header">
+                                <h6 class="name">{{ noise.name }}</h6>
+                            </div>
+                            <div class="actions">
+                                <button class="icon-button" v-on:click="playNoise(noise)">
+                                    <svg class="icon">
+                                        <use xlink:href="#icon-play"></use>
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -75,6 +77,8 @@
 
 
 <style lang="scss">
+
+    @import '../assets/variables.scss';
     
     .noise-inventory {
         padding-top: 2rem;
@@ -91,7 +95,7 @@
             }
 
             .header {
-                background-color: #33485d;
+                background-color: $blue;
                 color: #FFF;
 
                 .name {
