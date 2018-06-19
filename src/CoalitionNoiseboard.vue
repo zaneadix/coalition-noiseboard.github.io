@@ -14,7 +14,7 @@
         
         <div class="content">
             <div class="container">
-                <NoiseInventory></NoiseInventory>
+                <router-view></router-view>
             </div>
         </div>
         

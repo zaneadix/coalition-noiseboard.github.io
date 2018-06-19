@@ -1,16 +1,8 @@
 
 <template>
     
-    <div class="boards-list">
-        <ul>
-            <li class="title"><strong>Boards</strong></li>
-            <li>
-                <router-link to="/board/scotch_on_the_rocks">Scotch on the Rocks</router-link>
-            </li>
-            <li>
-                <router-link to="/board/wild_frontier">Wild Frontier</router-link>
-            </li>
-        </ul>
+    <div class="board">
+        <h1>{{ 'BOARD NAME' }}</h1>
     </div>
     
 </template>
@@ -23,7 +15,7 @@
     export default {
         name: 'boards-list',
         props: ['data'],
-        compouted: {
+        computed: {
             ...mapState({
                 // noiseCategories: state => {
                 //     return Object.getOwnPropertyNames(state.noises);

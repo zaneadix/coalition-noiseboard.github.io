@@ -22,63 +22,7 @@
                 </div>
             </div>
         </div>
-        <div class="noise-category" v-for="category in noiseCategories">
-            <h3>{{ category }}</h3>
-            <div class="row">
-                <div class="col-3" v-for="noise in noises[category]">
-                    <div class="noise-card">
-                        <div class="header">
-                            <h6 class="name">{{ noise.name }}</h6>
-                        </div>
-                        <div class="actions">
-                            <button class="icon-button" v-on:click="playNoise(noise)">
-                                <svg class="icon">
-                                    <use xlink:href="#icon-play"></use>
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="noise-category" v-for="category in noiseCategories">
-            <h3>{{ category }}</h3>
-            <div class="row">
-                <div class="col-3" v-for="noise in noises[category]">
-                    <div class="noise-card">
-                        <div class="header">
-                            <h6 class="name">{{ noise.name }}</h6>
-                        </div>
-                        <div class="actions">
-                            <button class="icon-button" v-on:click="playNoise(noise)">
-                                <svg class="icon">
-                                    <use xlink:href="#icon-play"></use>
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="noise-category" v-for="category in noiseCategories">
-            <h3>{{ category }}</h3>
-            <div class="row">
-                <div class="col-3" v-for="noise in noises[category]">
-                    <div class="noise-card">
-                        <div class="header">
-                            <h6 class="name">{{ noise.name }}</h6>
-                        </div>
-                        <div class="actions">
-                            <button class="icon-button" v-on:click="playNoise(noise)">
-                                <svg class="icon">
-                                    <use xlink:href="#icon-play"></use>
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
     </div>
 
 </template>
