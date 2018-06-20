@@ -1,9 +1,11 @@
 
-import Github from 'github-api';
 import find from 'lodash/find';
+import { Howl } from 'howler';
 import { Board } from './models';
 
 export const parseBoards = ({ commit, state }, boards) => {
+
+    console.log(boards);
 
     
     commit('setBoards', boards);
