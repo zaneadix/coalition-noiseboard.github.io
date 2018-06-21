@@ -57,6 +57,10 @@
         color: $blue;
     }
 
+    button {
+        cursor: pointer;
+    }
+
     .icon {
         height: 1rem;
         width: 1rem;
@@ -67,10 +71,48 @@
         margin: 0;
         border: 0;
         height: 0;
+        background-color: transparent;
+        line-height: 0;
+        color: $blue;
 
         .icon {
-            height: 1.5rem;
-            width: 1.5rem;
+            color: $blue;
+            height: 1.2rem;
+            width: 1.2rem;
+        }
+
+        &:focus {
+            outline: none;
+        }
+
+        &:hover {
+            .icon {
+                color: $orange;
+            }
+        }
+
+        &:active {
+            .icon {
+                color: darken($orange, 20%);
+            }
+        }
+        
+        &.inverse {
+            .icon {
+                color: $white;
+            }
+
+            &:hover {
+                .icon {
+                    color: $orange;
+                }
+            }
+
+            &:active {
+                .icon {
+                    color: darken($orange, 20%);
+                }
+            }
         }
     }
 
@@ -113,7 +155,7 @@
                 margin: 0;
 
                 li a, .title {
-                    padding-left: 1rem;
+                    padding: 0 1rem;
                 }
 
                 li {

@@ -8,50 +8,55 @@
             </div>
             <div class="body container">
                 <div class="keys">
+
                     <div class="key-row">
-                        <div class="key key-0"></div>
-                        <div class="key key-1"></div>
-                        <div class="key key-2"></div>
-                        <div class="key key-3"></div>
-                        <div class="key key-4"></div>
-                        <div class="key key-5"></div>
-                        <div class="key key-6"></div>
-                        <div class="key key-7"></div>
-                        <div class="key key-8"></div>
-                        <div class="key key-9"></div>
+                        <Key character="0" v-bind:pressed="pressed"></Key>
+                        <Key character="1" v-bind:pressed="pressed"></Key>
+                        <Key character="2" v-bind:pressed="pressed"></Key>
+                        <Key character="3" v-bind:pressed="pressed"></Key>
+                        <Key character="4" v-bind:pressed="pressed"></Key>
+                        <Key character="5" v-bind:pressed="pressed"></Key>
+                        <Key character="6" v-bind:pressed="pressed"></Key>
+                        <Key character="7" v-bind:pressed="pressed"></Key>
+                        <Key character="8" v-bind:pressed="pressed"></Key>
+                        <Key character="9" v-bind:pressed="pressed"></Key>
                     </div>
+
                     <div class="key-row">
-                        <div class="key key-q"></div>
-                        <div class="key key-w"></div>
-                        <div class="key key-e"></div>
-                        <div class="key key-r"></div>
-                        <div class="key key-t"></div>
-                        <div class="key key-y"></div>
-                        <div class="key key-u"></div>
-                        <div class="key key-i"></div>
-                        <div class="key key-o"></div>
-                        <div class="key key-p"></div>
+                        <Key character="q" v-bind:pressed="pressed"></Key>
+                        <Key character="w" v-bind:pressed="pressed"></Key>
+                        <Key character="e" v-bind:pressed="pressed"></Key>
+                        <Key character="r" v-bind:pressed="pressed"></Key>
+                        <Key character="t" v-bind:pressed="pressed"></Key>
+                        <Key character="y" v-bind:pressed="pressed"></Key>
+                        <Key character="u" v-bind:pressed="pressed"></Key>
+                        <Key character="i" v-bind:pressed="pressed"></Key>
+                        <Key character="o" v-bind:pressed="pressed"></Key>
+                        <Key character="p" v-bind:pressed="pressed"></Key>
                     </div>
+
                     <div class="key-row">
-                        <div class="key key-a"></div>
-                        <div class="key key-s"></div>
-                        <div class="key key-d"></div>
-                        <div class="key key-f"></div>
-                        <div class="key key-g"></div>
-                        <div class="key key-h"></div>
-                        <div class="key key-j"></div>
-                        <div class="key key-k"></div>
-                        <div class="key key-l"></div>
+                        <Key character="a" v-bind:pressed="pressed"></Key>
+                        <Key character="s" v-bind:pressed="pressed"></Key>
+                        <Key character="d" v-bind:pressed="pressed"></Key>
+                        <Key character="f" v-bind:pressed="pressed"></Key>
+                        <Key character="g" v-bind:pressed="pressed"></Key>
+                        <Key character="h" v-bind:pressed="pressed"></Key>
+                        <Key character="j" v-bind:pressed="pressed"></Key>
+                        <Key character="k" v-bind:pressed="pressed"></Key>
+                        <Key character="l" v-bind:pressed="pressed"></Key>
                     </div>
+
                     <div class="key-row">
-                        <div class="key key-z"></div>
-                        <div class="key key-x"></div>
-                        <div class="key key-c"></div>
-                        <div class="key key-v"></div>
-                        <div class="key key-b"></div>
-                        <div class="key key-n"></div>
-                        <div class="key key-m"></div>
+                        <Key character="z" v-bind:pressed="pressed"></Key>
+                        <Key character="x" v-bind:pressed="pressed"></Key>
+                        <Key character="c" v-bind:pressed="pressed"></Key>
+                        <Key character="v" v-bind:pressed="pressed"></Key>
+                        <Key character="b" v-bind:pressed="pressed"></Key>
+                        <Key character="n" v-bind:pressed="pressed"></Key>
+                        <Key character="m" v-bind:pressed="pressed"></Key>
                     </div>
+
                 </div>
             </div>
             
@@ -66,12 +71,30 @@
     import { routerLink } from 'vue-router';
     import find from 'lodash/find';
     import { Howl } from 'howler';
+    import Key from './Key.vue';
     
     export default {
-        name: 'boards-list',
-        created: function () {
-            window.addEventListener('keyup', this.checkInput)  
+
+        name: 'board',
+
+        components: {
+            Key
         },
+
+        data: () => {
+            return {
+                pressed: ''
+            }
+        },
+
+        created: function () {
+            window.addEventListener('keydown', this.checkInput)
+            window.addEventListener('keyup', function () {
+                console.log('UP');
+                this.pressed = '';
+            })   
+        },
+
         computed: {
             ...mapState({
                 board: function (state) {
@@ -86,6 +109,7 @@
 
             })
         },
+
         methods: {
             // playNoise: function (noise) {
             //     var sound = new Howl({
@@ -96,6 +120,7 @@
             // }
             checkInput: function (event) {
                 console.log('CLICKED', event.key);
+                this.pressed = event.key;
                 if (!this.board.keys[event.key]) {
                     var sound = new Howl({
                         src: ['/noises/guns/gun2.wav'],
@@ -138,72 +163,6 @@
             display: flex;
             justify-content: center;
             margin-bottom: .5rem;
-        }
-        .key {
-            position: relative;
-            height: 5rem;
-            width: 6rem;
-            background-color: #FFF;
-            margin-right: .5rem;
-            box-shadow: 2px 2px 4px rgba(0,0,0,.1);
-            border-radius: 3px;
-
-            &:last-of-type {
-                margin-right: 0;
-            }
-
-            &:after {
-                display: block;
-                position: absolute;
-                content: '';
-                top: 3px;
-                left: 3px;
-                font-size: 1rem;
-                line-height: 1rem;
-                opacity: 1;
-                z-index: 1;
-                text-align: center;
-            }
-
-            &-0:after { content: '0'; }
-            &-1:after { content: '1'; }
-            &-2:after { content: '2'; }
-            &-3:after { content: '3'; }
-            &-4:after { content: '4'; }
-            &-5:after { content: '5'; }
-            &-6:after { content: '6'; }
-            &-7:after { content: '7'; }
-            &-8:after { content: '8'; }
-            &-9:after { content: '9'; }
-
-            &-q:after { content: 'Q'; }
-            &-w:after { content: 'W'; }
-            &-e:after { content: 'E'; }
-            &-r:after { content: 'R'; }
-            &-t:after { content: 'T'; }
-            &-y:after { content: 'Y'; }
-            &-u:after { content: 'U'; }
-            &-i:after { content: 'I'; }
-            &-o:after { content: 'O'; }
-            &-p:after { content: 'P'; }
-
-            &-a:after { content: 'A'; }
-            &-s:after { content: 'S'; }
-            &-d:after { content: 'D'; }
-            &-f:after { content: 'F'; }
-            &-g:after { content: 'G'; }
-            &-h:after { content: 'H'; }
-            &-j:after { content: 'J'; }
-            &-k:after { content: 'K'; }
-            &-l:after { content: 'L'; }
-
-            &-z:after { content: 'Z'; }
-            &-x:after { content: 'X'; }
-            &-c:after { content: 'C'; }
-            &-v:after { content: 'V'; }
-            &-b:after { content: 'B'; }
-            &-n:after { content: 'N'; }
-            &-m:after { content: 'M'; }
         }
     }
 
