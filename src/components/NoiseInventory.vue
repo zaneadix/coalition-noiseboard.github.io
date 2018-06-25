@@ -4,6 +4,12 @@
     <div class="noise-inventory">
         
         <div class="container">
+
+            <input id="noise-filter"
+                   name="noise-filter"
+                   type="text"
+                   placeholder="Filter Noises">
+
             <div class="noise-category" v-for="category in noiseCategories">
                 <h3>{{ category }}</h3>
                 <div class="row">
@@ -13,6 +19,11 @@
                                 <h6 class="name">{{ noise.name }}</h6>
                             </div>
                             <div class="actions">
+                                <button class="icon-button adder">
+                                    <svg class="icon">
+                                        <use xlink:href="#icon-plus-square"></use>
+                                    </svg>
+                                </button>
                                 <button class="icon-button" v-on:click="playNoise(noise)">
                                     <svg class="icon">
                                         <use xlink:href="#icon-play"></use>
@@ -82,6 +93,24 @@
     
     .noise-inventory {
         padding-top: 2rem;
+        position: relative;
+
+        #noise-filter {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 200px;
+            background-color: $blue;
+            color: $white;
+            border: 0;
+            height: 36px;
+            padding: .5rem;
+            border-radius: 3px;
+
+            &:focus {
+                outline: none;
+            }
+        }
 
         .noise-card {
             background-color: #FFF;
@@ -97,6 +126,7 @@
             .header {
                 background-color: $blue;
                 color: #FFF;
+                display: flex;
 
                 .name {
                     margin-bottom: 0;
@@ -104,7 +134,11 @@
             }
 
             .actions {
+                display: flex;
                 
+                .adder {
+                    margin-right: auto;
+                }
             }
         }
     }

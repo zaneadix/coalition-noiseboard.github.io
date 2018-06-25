@@ -11,7 +11,9 @@
             </div>
 
             <ul>
-                <li><a href="">Songs</a></li>
+                <li>
+                    <router-link :to="'/'">Noises</router-link>
+                </li>
             </ul>
             <BoardsList></BoardsList>
         </div>
@@ -70,15 +72,21 @@
         padding: 0;
         margin: 0;
         border: 0;
-        height: 0;
         background-color: transparent;
         line-height: 0;
         color: $blue;
+
 
         .icon {
             color: $blue;
             height: 1.2rem;
             width: 1.2rem;
+        }
+
+        &:before {
+            content: '';
+            display: inline-block;
+            line-height: 1rem;
         }
 
         &:focus {

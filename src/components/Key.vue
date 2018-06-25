@@ -8,8 +8,11 @@
     </div> -->
 
     <div class="key"
-         v-bind:class="{ active: pressed === character }">
-        <span class="character">{{ character.toUpperCase() }}</span>
+         v-bind:class="{ active: pressed }">
+        <div class="key-body">
+            <span class="character">{{ character.toUpperCase() }}</span>
+            <span>{{pressed}}</span>
+        </div>
     </div>
     
 </template>
@@ -21,15 +24,42 @@
     export default {
         name: 'key',
         props: [
-            'character',
-            'pressed'
+            'character'
         ],
+
+        data: function () {
+            return {
+                pressed: false
+            }
+        },
+
+        created: function () {
+            let pressed = this.pressed;
+            window.addEventListener('keydown', this.checkPress);
+            window.addEventListener('keyup', this.checkRelease);
+        },
+
         methods: {
+            checkPress: function (event) {
+                if (event.key === this.character) {
+                    this.pressed = true;
+                    console.log(event.key, 'PRESSED');
+                }
+                if (this.pressed) {
+                    this.playNoise();
+                }
+            },
+            checkRelease: function (event) {
+                if (event.key === this.character) {
+                    this.pressed = false;
+                    console.log(event.key, 'RELEASED');
+                }
+            },
             playNoise: function (noise) {
                 var sound = new Howl({
-                    src: [noise.path],
+                    src: ['/noises/guns/gun2.wav'],
                     autoplay: true,
-                    volume: 1,
+                    volume: 0.5,
                 });
             }
         }
@@ -39,76 +69,53 @@
 
 
 <style lang="scss">
+
+    @import '../assets/variables';
     
     .key {
-        position: relative;
         height: 5rem;
         width: 6rem;
-        background-color: #FFF;
         margin-right: .5rem;
-        box-shadow: 2px 2px 4px rgba(0,0,0,.1), -2px 2px 4px rgba(0,0,0,.1);
+        padding: 0;
         border-radius: 3px;
+        background-color: rgba(255,75,56,.1);
 
         &.active {
-            box-shadow: 2px 2px 4px rgba(255, 75, 56,.2), -2px 2px 4px rgba(255, 75, 56,.2);
+            padding: 2px;
+
+            .key-body {
+                // box-shadow: 3px 3px 6px rgba(255,75,56,.2), -3px 3px 6px rgba(255,75,56,.2);
+
+                .character {
+                    color: $orange;
+                    font-weight: bold;
+                }
+            }
         }
 
-/*        &:last-of-type {
-            margin-right: 0;
+        .key-body {
+            display: flex;
+            height: 100%;
+            position: relative;
+            background-color: #FFF;
+            border-radius: 3px;
+            box-shadow: 3px 3px 6px rgba(0,0,0,.1), -3px 3px 6px rgba(0,0,0,.1);
+            align-items: center;
+            justify-content: center;
+
+            .character {
+                display: block;
+                position: absolute;
+                content: '';
+                top: 5px;
+                left: 5px;
+                font-size: 80%;
+                line-height: 80%;
+                opacity: 1;
+                z-index: 1;
+                text-align: center;
+            }
         }
-*/
-        .character {
-            display: block;
-            position: absolute;
-            content: '';
-            top: 3px;
-            left: 3px;
-            font-size: 1rem;
-            line-height: 1rem;
-            opacity: 1;
-            z-index: 1;
-            text-align: center;
-        }
-
-        /*&-0:after { content: '0'; }
-        &-1:after { content: '1'; }
-        &-2:after { content: '2'; }
-        &-3:after { content: '3'; }
-        &-4:after { content: '4'; }
-        &-5:after { content: '5'; }
-        &-6:after { content: '6'; }
-        &-7:after { content: '7'; }
-        &-8:after { content: '8'; }
-        &-9:after { content: '9'; }
-
-        &-q:after { content: 'Q'; }
-        &-w:after { content: 'W'; }
-        &-e:after { content: 'E'; }
-        &-r:after { content: 'R'; }
-        &-t:after { content: 'T'; }
-        &-y:after { content: 'Y'; }
-        &-u:after { content: 'U'; }
-        &-i:after { content: 'I'; }
-        &-o:after { content: 'O'; }
-        &-p:after { content: 'P'; }
-
-        &-a:after { content: 'A'; }
-        &-s:after { content: 'S'; }
-        &-d:after { content: 'D'; }
-        &-f:after { content: 'F'; }
-        &-g:after { content: 'G'; }
-        &-h:after { content: 'H'; }
-        &-j:after { content: 'J'; }
-        &-k:after { content: 'K'; }
-        &-l:after { content: 'L'; }
-
-        &-z:after { content: 'Z'; }
-        &-x:after { content: 'X'; }
-        &-c:after { content: 'C'; }
-        &-v:after { content: 'V'; }
-        &-b:after { content: 'B'; }
-        &-n:after { content: 'N'; }
-        &-m:after { content: 'M'; }*/
     }
 
 </style>
