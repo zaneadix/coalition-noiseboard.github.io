@@ -3,7 +3,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import CoalitionNoiseboard from './CoalitionNoiseboard.vue';
 import NoiseInventory from './components/NoiseInventory.vue';
-import Board from './components/Board.vue';
+import BoardPage from './components/BoardPage.vue';
 import store from './store';
 
 const router = new VueRouter({
@@ -14,12 +14,22 @@ const router = new VueRouter({
     },{
         path: '/board/:id',
         name: 'board',
-        component: Board 
+        component: BoardPage 
     }]
 });
 
 Vue.config.productionTip = false;
 Vue.use(VueRouter);
+
+Vue.filter('title', function (name) {
+  return name.replace(/_/g, ' ')
+             .replace(
+                 /\w\S*/g,
+                 function(txt) {
+                     return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+                 }
+             );
+})
 
 new Vue({
     store,

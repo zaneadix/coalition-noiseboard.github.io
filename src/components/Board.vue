@@ -2,18 +2,29 @@
 <template>
     
     <div class="board">
-        <div v-if="board">
-            <div class="header">
-                <h1 class="name">{{ board.name }}</h1>
-            </div>
+        <div v-if="model">
+            
             <div class="body container">
                 <div class="keys">
+                    
+                    <div v-if="interactive">
+                        <div class="key-row" v-for="(keySet, index) in keySets">
+                            <Key v-for="key in keySet"
+                                 :key="key"
+                                 :character="key">
+                            </Key>
+                        </div>
+                    </div>
 
-                    <div class="key-row" v-for="(keySet, index) in keySets">
-                        <Key v-for="key in keySet"
-                             :key="key"
-                             :character="key">
-                        </Key>
+                    <div v-else>
+                        <div class="key-row" v-for="(keySet, index) in keySets">
+                            <div class="assignment-key key" v-for="key in keySet">
+                                <div class="key-body" v-on:click="$emit('set-to-key', key)">
+                                    <span class="character">{{ key.toUpperCase() }}</span>
+                                    <!-- <span>{{pressed}}</span> -->
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
@@ -40,6 +51,15 @@
             Key
         },
 
+        props: {
+            model: {
+                default: null
+            },
+            interactive: {
+                default: false
+            }
+        },
+
         data: () => {
             return {
                 pressed: '',
@@ -50,50 +70,15 @@
                     ['z', 'x', 'c', 'v', 'b', 'n', 'm']
                 ]
             }
-        },
-
-        computed: {
-            ...mapState({
-                board: function (state) {
-                    const id = this.$route.params.id;
-                    return find(state.boards, (board) => {
-                        return board.id === id;
-                    });
-                }
-
-            })
-        },
-
-        methods: {
-
         }
     }
 
 </script>
 
 
-<style lang="scss">
+<style lang="scss" scoped="true">
 
     @import '../assets/variables';
-
-    .header {
-        height: 5rem;
-        display: flex;
-        justify-content: center;
-
-        .name {
-            text-align: center;
-            margin-bottom: 0;
-            margin-top: auto;
-            font-size: 2rem;
-            line-height: 2rem;
-
-        }
-    }
-
-    .body {
-        padding-top: 4rem;
-    }
 
     .keys {
         .key-row {

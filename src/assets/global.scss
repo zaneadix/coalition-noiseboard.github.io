@@ -1,0 +1,233 @@
+@import './variables';
+
+html {
+        // font-size: 14px;
+}
+
+body {
+    background-color: $white;
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: $blue;
+}
+
+button {
+    cursor: pointer;
+}
+
+.modal-container {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background-color: rgba(54, 68, 79, .7);
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    .modal {
+        width: 50%;
+        max-width: 650px;
+        min-height: 400px;
+        display: block;
+        position: relative;
+        background-color: $white;
+        border-radius: 3px;
+
+        .title {
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-bottom: 0;
+        }
+    }
+}
+
+.icon {
+    height: 1rem;
+    width: 1rem;
+}
+
+.icon-button {
+    padding: 0;
+    margin: 0;
+    border: 0;
+    background-color: transparent;
+    line-height: 0;
+    color: $blue;
+
+
+    .icon {
+        color: $blue;
+        height: 1.2rem;
+        width: 1.2rem;
+    }
+
+    &:before {
+        content: '';
+        display: inline-block;
+        line-height: 1rem;
+    }
+
+    &:focus {
+        outline: none;
+    }
+
+    &:hover {
+        .icon {
+            color: $orange;
+        }
+    }
+
+    &:active {
+        .icon {
+            color: darken($orange, 20%);
+        }
+    }
+    
+    &.inverse {
+        .icon {
+            color: $white;
+        }
+
+        &:hover {
+            .icon {
+                color: $orange;
+            }
+        }
+
+        &:active {
+            .icon {
+                color: darken($orange, 20%);
+            }
+        }
+    }
+}
+
+#coalition-noiseboard {
+
+    display: flex;
+    flex-grow: 1;
+    overflow: hidden;
+    height: 100vh;
+
+    .sidebar {
+        background-color: $blue;
+        width: 240px;
+        flex-shrink: 0;
+        color: $white;
+
+        .brand {
+            display: flex;
+            padding-left: 1rem;
+            border-bottom: 1px solid $white; 
+            margin-bottom: 1rem;
+            align-items: center;
+            height: 5rem;
+
+            .logo {
+                height: 3rem;
+                width: 3rem;
+                margin-right: .5rem;
+            }
+
+            .name {
+                font-size: 1.3rem;
+                line-height: 1.4rem;
+            }
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+
+            li a, .title {
+                padding: 0 1rem;
+            }
+
+            li {
+                margin-bottom: .5rem;
+                a {
+                    color: $white;
+                    padding-left: 1rem;
+                    display: inline-block;
+                    width: 100%;
+                    &:hover {
+                        text-decoration: none;
+                        background-color: darken($blue, 10%);
+                    }
+                }
+            }
+        }
+    }
+
+    .content {
+        flex-grow: 1;
+        overflow-y: scroll;
+    }
+
+    nav {
+        background-color: #FFF;
+        box-shadow: 0px 2px 4px rgba(0,0,0,.1);
+    }
+
+    .inline-field {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        margin-bottom: 2rem;
+
+        label {
+            margin: 0 .5rem 0 0;
+        }
+    }
+
+    .key {
+        height: 5rem;
+        width: 6rem;
+        margin-right: .5rem;
+        padding: 0;
+        border-radius: 3px;
+        background-color: rgba(255,75,56,.1);
+
+        &.active {
+            padding: 2px;
+
+            .key-body {
+                // box-shadow: 3px 3px 6px rgba(255,75,56,.2), -3px 3px 6px rgba(255,75,56,.2);
+
+                .character {
+                    color: $orange;
+                    font-weight: bold;
+                }
+            }
+        }
+
+        .key-body {
+            display: flex;
+            height: 100%;
+            position: relative;
+            background-color: #FFF;
+            border-radius: 3px;
+            box-shadow: 3px 3px 6px rgba(0,0,0,.1), -3px 3px 6px rgba(0,0,0,.1);
+            align-items: center;
+            justify-content: center;
+
+            .character {
+                display: block;
+                position: absolute;
+                content: '';
+                top: 5px;
+                left: 5px;
+                font-size: 80%;
+                line-height: 80%;
+                opacity: 1;
+                z-index: 1;
+                text-align: center;
+            }
+        }
+    }
+}
