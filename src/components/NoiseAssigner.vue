@@ -1,7 +1,17 @@
 <template>
     
-    <div id="noise-assigner" class="modal-container">
+    <div id="noise-assigner"
+         class="modal-container">
+
         <div class="modal">
+
+            <button
+                class="icon-button close"
+                v-on:click="$emit('close-modal')">
+                <svg class="icon">
+                    <use xlink:href="#icon-create"></use>
+                </svg>
+            </button>
 
             <h3 class="title">
                 Assign Noise
@@ -28,7 +38,7 @@
                     
                 </div>
 
-                <Board model="board" v-on:set-to-key="setNoise($event)"></Board>
+                <Board :model="board" v-on:set-to-key="assignNoise($event)"></Board>
 
             </div>
         </div>
@@ -68,24 +78,41 @@
         computed: {
             ...mapState({
                 boards: function (state) {
+                    console.log('UPDATE BOARDS');
                     if (state.boards.length && !this.initialized) {
                         this.selectedBoard = state.boards[0].id;
                         this.initialized = true;
                     }
                     return state.boards;
                 },
-                board: function (state) {
-                    const id = this.$route.params.id;
-                    return find(state.boards, (board) => {
-                        return board.id === this.selectedBoard;
-                    });
-                }
-            })
+                // board: function (state) {
+                //     console.log('UPDATE BOARD');
+                //     const id = this.$route.params.id;
+                //     return find(state.boards, (board) => {
+                //         return board.id === this.selectedBoard;
+                //     });
+                // }
+            }),
+            board: function () {
+                return find(this.boards, (board) => {
+                    return board.id === this.selectedBoard;
+                });
+            }
         },
 
         methods: {
-            setNoise: function (key) {
+
+            ...mapActions(['assignNoiseToBoard']),
+
+            assignNoise: function (key) {
                 console.log('SETTING', this.noise.name, 'TO', key)
+
+                this.assignNoiseToBoard({
+                    boardId: this.selectedBoard,
+                    key,
+                    name: this.noiseName,
+                    source: this.noise.source
+                });
             }
         }
     }
@@ -99,6 +126,20 @@
             max-width: 90%;
             width: 90%;
             height: 90%;
+            position: relative;
+
+            .close {
+                transform: rotate(45deg);
+                transform-origin: center;
+                position: absolute;
+                top: 1rem;
+                right: 1rem;
+
+                svg {
+                    height: 2rem;
+                    width: 2rem;
+                }
+            }
 
             .body {
                 .setup {

@@ -9,21 +9,24 @@
                     
                     <div v-if="interactive">
                         <div class="key-row" v-for="(keySet, index) in keySets">
-                            <Key v-for="key in keySet"
-                                 :key="key"
-                                 :character="key">
-                            </Key>
+                            <NoiseKey
+                                v-for="key in keySet"
+                                :model="model.keys[key]"
+                                :key="key"
+                                :character="key">
+                            </NoiseKey>
                         </div>
                     </div>
 
                     <div v-else>
                         <div class="key-row" v-for="(keySet, index) in keySets">
-                            <div class="assignment-key key" v-for="key in keySet">
-                                <div class="key-body" v-on:click="$emit('set-to-key', key)">
-                                    <span class="character">{{ key.toUpperCase() }}</span>
-                                    <!-- <span>{{pressed}}</span> -->
-                                </div>
-                            </div>
+                            <AssignmentKey
+                                v-for="key in keySet"
+                                :model="model.keys[key]"
+                                :key="key"
+                                :character="key"
+                                v-on:key-clicked="$emit('set-to-key', key)">
+                            </AssignmentKey>
                         </div>
                     </div>
 
@@ -41,14 +44,16 @@
     import { routerLink } from 'vue-router';
     import find from 'lodash/find';
     import { Howl } from 'howler';
-    import Key from './Key.vue';
+    import NoiseKey from './NoiseKey.vue';
+    import AssignmentKey from './AssignmentKey.vue';
     
     export default {
 
         name: 'board',
 
         components: {
-            Key
+            NoiseKey,
+            AssignmentKey
         },
 
         props: {
@@ -57,6 +62,12 @@
             },
             interactive: {
                 default: false
+            }
+        },
+
+        watch: {
+            model: function (model) {
+                console.log('setting model', model)
             }
         },
 

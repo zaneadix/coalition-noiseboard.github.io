@@ -10,7 +10,6 @@ export const hydrate = ({ commit, dispatch, state }) => {
             return response.json();
         })
         .then(boards => {
-            console.log('FUCKING BOARDS', boards);
             dispatch('parseBoards', boards);
         });
 

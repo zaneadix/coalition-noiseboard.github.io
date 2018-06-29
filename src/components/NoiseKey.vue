@@ -1,11 +1,12 @@
 
 <template>
 
-    <div class="key"
+    <div class="key noise-key"
          v-bind:class="{ active: pressed }">
         <div class="key-body">
-            <span class="character">{{ character.toUpperCase() }}</span>
-            <span>{{pressed}}</span>
+            <span class="character">{{ character }}</span>
+            <span v-if="model">{{ model.name }}</span>
+            <small v-else class="soft-text">empty</small>
         </div>
     </div>
     
@@ -16,9 +17,11 @@
     import { mapState, mapActions } from 'vuex';
     
     export default {
-        name: 'key',
+        name: 'noise-key',
+        
         props: [
-            'character'
+            'character',
+            'model'
         ],
 
         data: function () {
@@ -50,11 +53,15 @@
                 }
             },
             playNoise: function (noise) {
-                var sound = new Howl({
-                    src: ['/noises/guns/gun2.wav'],
-                    autoplay: true,
-                    volume: 0.5,
-                });
+                // var sound = new Howl({
+                //     src: ['/noises/guns/gun2.wav'],
+                //     autoplay: true,
+                //     volume: 0.5,
+                // });
+
+                if (this.model && this.model.howl) {
+                    this.model.howl.play();
+                }
             }
         }
     }

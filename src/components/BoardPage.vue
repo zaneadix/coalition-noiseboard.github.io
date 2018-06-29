@@ -5,7 +5,7 @@
         <div class="header">
             <h1 class="name">{{ board.name }}</h1>
         </div>
-        <Board model="board" interactive="true"></Board>
+        <Board :model="board" interactive="true"></Board>
     </div>
     
     
@@ -37,10 +37,6 @@
                 }
 
             })
-        },
-
-        methods: {
-
         }
     }
 
@@ -55,6 +51,7 @@
         height: 5rem;
         display: flex;
         justify-content: center;
+        margin-bottom: 40px;
 
         .name {
             text-align: center;
@@ -62,7 +59,7 @@
             margin-top: auto;
             font-size: 2rem;
             line-height: 2rem;
-
+    
         }
     }
 

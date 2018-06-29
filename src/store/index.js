@@ -24,6 +24,7 @@ const mutations = {
 
 const store = new Vuex.Store({
     state: {
+        ...coreModule.state,
         ...boardsModule.state,
         ...noisesModule.state
     },

@@ -1,7 +1,7 @@
 
 import Github from 'github-api';
 import map from 'lodash/map';
-import { Noise } from './models';
+import { NoisePreview } from './models';
 
 export const parseNoises = ({ commit, state }, tree) => {
 
@@ -19,8 +19,8 @@ export const parseNoises = ({ commit, state }, tree) => {
         const name = segments[2].replace(/\.\w{3}/, '');
         noiseMap[category] = noiseMap[category] || [];
         noiseMap[category].push(Object.assign(
-            new Noise(),
-            { name, category, path: path }
+            new NoisePreview(),
+            { name, category, source: path }
         ));
     });
     

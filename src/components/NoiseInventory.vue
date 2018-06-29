@@ -3,7 +3,11 @@
     
     <div class="noise-inventory">
 
-        <NoiseAssigner v-if="selectedNoise" :noise="selectedNoise"></NoiseAssigner>
+        <NoiseAssigner
+            v-if="selectedNoise"
+            v-on:close-modal="clearNoise()"
+            :noise="selectedNoise">
+        </NoiseAssigner>
         
         <div class="container">
 
@@ -68,6 +72,10 @@
             }
         },
 
+        created: function () {
+            window.addEventListener('keyup', this.checkEsc);
+        },
+
         computed: {
             ...mapState({
                 noiseCategories: state => {
@@ -89,6 +97,16 @@
 
         methods: {
 
+            checkEsc: function (event) {
+                if (event.code === 'Escape') {
+                    this.clearNoise();
+                }
+            },
+
+            clearNoise: function () {
+                this.selectedNoise = null;
+            },
+
             selectNoise: function (noise) {
                 this.selectedNoise = noise;
             },
@@ -101,7 +119,7 @@
                 }
 
                 this.currentNoise = new Howl({
-                    src: [noise.path],
+                    src: [noise.source],
                     autoplay: true,
                     volume: 0.5,
                     onend: function () {
