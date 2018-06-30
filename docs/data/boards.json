@@ -1,1 +1,1 @@
-[{"name":"Scotch on the Rocks","id":"scotch_on_the_rocks","keys":{}},{"name":"Wilde Frontier","id":"wilde_frontier","keys":{}}]
+[{"name":"Scotch on the Rocks","id":"scotch_on_the_rocks","keys":{"1":{"name":"Quack","defaults":{"volume":1,"rate":1,"loop":false,"autoplay":false},"source":"noises/animals/duck_quack.wav"}}},{"name":"Wilde Frontier","id":"wilde_frontier","keys":{}}]
