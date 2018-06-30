@@ -5,7 +5,8 @@
         <button
             class="save icon-button"
             :disabled="!dirty"
-            v-bind:class="{ 'pulse': dirty }">
+            v-bind:class="{ 'pulse': dirty }"
+            v-on:click="saveBoards()">
             <svg class="icon">
                 <use xlink:href="#icon-save"></use>
             </svg>
@@ -57,6 +58,10 @@
                     return state.dirty;
                 }
             })
+        },
+
+        methods: {
+            ...mapActions(['saveBoards'])
         }
     }
 
@@ -82,6 +87,7 @@
             position: absolute;
             top: 1rem;
             right: 1rem;
+            z-index: 100;
 
             &.pulse {
                 svg {

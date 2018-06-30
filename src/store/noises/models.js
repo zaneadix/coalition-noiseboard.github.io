@@ -11,6 +11,7 @@ export class Noise {
             autoplay: false
         };
         this.howl = null;
+        this._source = null;
     }
 
     set source (src) {
@@ -18,13 +19,34 @@ export class Noise {
             { src: [src] },
             this.defaults
         ))
-
+        this._source = src;
     }
 
     get source () {
-        if (this.howl) {
-            return this.howl.src;
-        }
+        return this._source;
+    }
+
+    get saveData () {
+        console.log('GETTING SAVE DATA', {
+                name: this.name,
+                defaults: this.defaults,
+                source: this.source
+            });
+        return Object.assign(
+            {},
+            {
+                name: this.name,
+                defaults: this.defaults,
+                source: this.source
+            }
+        );
+    }
+
+    static fromData (data) {
+        return Object.assign(
+            new Noise(),
+            data
+        );
     }
 }
 

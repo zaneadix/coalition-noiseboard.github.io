@@ -1,4 +1,7 @@
 
+import mapKeys from 'lodash/mapKeys';
+import { Noise } from '../noises/models';
+
 export class Board {
     
     constructor () {
@@ -45,11 +48,56 @@ export class Board {
     }
 
     set name (name) {
-        this.id = name.toLowercase().replace(/\s/g, '_');
+        this.id = name.toLowerCase().replace(/\s/g, '_');
         this._name = name;
     }
 
     get name () {
         return this._name;
+    }
+
+    get saveData () {
+
+        const keySaves = {};
+
+        mapKeys(this.keys, (value, key) => {
+            console.log(key, this.keys[key]);
+            if (this.keys[key]) {
+                keySaves[key] = this.keys[key].saveData;
+            }
+        });
+
+        console.log('KEY SAVES', keySaves);
+
+        return Object.assign(
+            {},
+            {
+                name: this.name,
+                id: this.id,
+                keys: keySaves
+            }
+        );
+    }
+
+    static fromData (data) {
+
+        const board = new Board();
+
+        console.log('BOARD DATA', data);
+
+        mapKeys(data.keys, (value, key) => {
+            console.log(key);
+            data.keys[key] = Noise.fromData(data.keys[key]);
+        });
+
+        data.keys = Object.assign(
+            board.keys,
+            data.keys
+        );
+
+        return Object.assign(
+            new Board(),
+            data
+        );
     }
 }
