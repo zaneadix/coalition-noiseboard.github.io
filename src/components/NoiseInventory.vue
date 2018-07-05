@@ -4,25 +4,26 @@
     <div class="noise-inventory">
 
         <NoiseAssigner
-            v-if="selectedNoise"
+            :hidden="!selectedNoise"
             v-on:close-modal="clearNoise()"
             :noise="selectedNoise">
         </NoiseAssigner>
         
-        <div class="container">
+        <div class="container-fluid">
 
             <input id="noise-filter"
+                   class="form-control"
                    name="noise-filter"
                    type="text"
                    placeholder="Filter Noises">
 
             <div class="noise-category" v-for="category in noiseCategories">
-                <h3 class="category-title">{{ category | title }}</h3>
+                <h2 class="category-title">{{ category | title }}</h2>
                 <div class="row">
                     <div class="col-3" v-for="noise in noises[category]">
                         <div class="noise-card">
                             <div class="header">
-                                <h6 class="name">{{ noise.name | title }}</h6>
+                                <p class="name h5">{{ noise.name }}</p>
                             </div>
                             <div class="actions">
                                 <button class="icon-button adder" v-on:click="selectNoise(noise)">
@@ -90,6 +91,9 @@
                     return categories;
                 },
                 noises: state =>  {
+
+                    console.log('computing noises');
+
                     return state.noises;
                 }
             })
@@ -136,7 +140,7 @@
 
 <style lang="scss" scoped="true">
 
-    @import '../assets/variables.scss';
+    @import '../styles/variables.scss';
     
     .noise-inventory {
         padding-top: 5rem;
@@ -147,9 +151,6 @@
             top: 1rem;
             right: 1rem;
             width: 200px;
-            background-color: $blue;
-            color: $white;
-            border: 0;
             height: 36px;
             padding: .5rem;
             border-radius: 3px;
@@ -161,36 +162,43 @@
 
         .noise-category {
 
-            margin-bottom: 1rem;
+            margin-bottom: 2rem;
 
             .category-title {
-
-                margin-bottom: 1rem;
+                text-align: center;
+                margin-bottom: 1.5rem;
             }
 
             .noise-card {
                 background-color: #FFF;
-                box-shadow: 0px 2px 4px rgba(0,0,0,.1);
-                margin-bottom: 1rem;
+                box-shadow: $standard-shadow;
+                margin-bottom: 2rem;
                 border-radius: 3px;
                 overflow: hidden;
+                border: 1px solid $shadow;
 
                 .header, .actions,  {
                     padding: .5rem;
                 }
 
                 .header {
-                    background-color: $blue;
-                    color: #FFF;
+                    // background-color: $blue;
+                    // color: #FFF;
                     display: flex;
 
                     .name {
                         margin-bottom: 0;
+                        font-weight: 600;
                     }
                 }
 
                 .actions {
                     display: flex;
+
+                    svg {
+                        height: 1.5rem;
+                        width: 1.5rem;
+                    }
                     
                     .adder {
                         margin-right: auto;

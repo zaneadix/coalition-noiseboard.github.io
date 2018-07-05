@@ -1,3 +1,4 @@
 export default {
-    dirty: true
+    dirty: false,
+    loadingAppData: true
 }

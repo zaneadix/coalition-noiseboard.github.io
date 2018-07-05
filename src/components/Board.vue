@@ -2,37 +2,35 @@
 <template>
     
     <div class="board">
-        <div v-if="model">
-            
-            <div class="body container">
-                <div class="keys">
-                    
-                    <div v-if="interactive">
-                        <div class="key-row" v-for="(keySet, index) in keySets">
-                            <NoiseKey
-                                v-for="key in keySet"
-                                :model="model.keys[key]"
-                                :key="key"
-                                :character="key">
-                            </NoiseKey>
-                        </div>
+        <div v-if="model" class="body">
+            <div class="keys">
+                
+                <div v-if="interactive">
+                    <div class="key-row" v-for="(keySet, index) in keySets">
+                        <NoiseKey
+                            v-for="key in keySet"
+                            :noise="model.keys[key]"
+                            :key="key"
+                            :character="key"
+                            v-on:noise-clicked="$emit('noise-clicked', $event)">
+                        </NoiseKey>
                     </div>
-
-                    <div v-else>
-                        <div class="key-row" v-for="(keySet, index) in keySets">
-                            <AssignmentKey
-                                v-for="key in keySet"
-                                :model="model.keys[key]"
-                                :key="key"
-                                :character="key"
-                                v-on:key-clicked="$emit('set-to-key', key)">
-                            </AssignmentKey>
-                        </div>
-                    </div>
-
                 </div>
+
+                <div v-else>
+                    <div class="key-row" v-for="(keySet, index) in keySets">
+                        <AssignmentKey
+                            v-for="key in keySet"
+                            :noise="model.keys[key]"
+                            :key="key"
+                            :character="key"
+                            v-on:assign="$emit('assign-noise', key)"
+                            v-on:unassign="$emit('unassign-noise', key)">
+                        </AssignmentKey>
+                    </div>
+                </div>
+
             </div>
-            
         </div>
     </div>
     
@@ -89,7 +87,7 @@
 
 <style lang="scss" scoped="true">
 
-    @import '../assets/variables';
+    @import '../styles/variables';
 
     .keys {
         .key-row {

@@ -1,4 +1,5 @@
 
+import Vue from 'vue';
 import { Howl } from 'howler';
 
 export class Noise {
@@ -27,33 +28,39 @@ export class Noise {
     }
 
     get saveData () {
-        console.log('GETTING SAVE DATA', {
-                name: this.name,
-                defaults: this.defaults,
-                source: this.source
-            });
-        return Object.assign(
-            {},
-            {
-                name: this.name,
-                defaults: this.defaults,
-                source: this.source
-            }
-        );
+        return  {
+            name: this.name,
+            defaults: this.defaults,
+            source: this.source
+        }
     }
 
     static fromData (data) {
-        return Object.assign(
-            new Noise(),
-            data
-        );
+        const noise = new Noise();
+        const returnValue = Object.assign(noise, data);
+        return returnValue
     }
 }
 
 export class NoisePreview {
     constructor () {
-        this.name = '';
+        this._name = '';
         this.category = '';
         this.source = '';
+    }
+
+    set name (name) {
+        this._name = Vue.options.filters.title(name);
+    }
+
+    get name () {
+        return this._name;
+    }
+
+    static fromData (data) {
+        return Object.assign(
+            new NoisePreview(),
+            data
+        )
     }
 }

@@ -3,9 +3,9 @@
 
     <div class="key noise-key"
          v-bind:class="{ active: pressed }">
-        <div class="key-body">
-            <span class="character">{{ character }}</span>
-            <span v-if="model">{{ model.name }}</span>
+        <div class="key-body" v-on:click="checkClick()">
+            <span class="character">{{ character | title }}</span>
+            <span v-if="noise" class="noise-name">{{ noise.name }}</span>
             <small v-else class="soft-text">empty</small>
         </div>
     </div>
@@ -21,7 +21,7 @@
         
         props: [
             'character',
-            'model'
+            'noise'
         ],
 
         data: function () {
@@ -37,10 +37,14 @@
         },
 
         methods: {
+            checkClick: function () {
+                if (this.noise) {
+                    this.$emit('noise-clicked', this.character);
+                }
+            },
             checkPress: function (event) {
                 if (event.key === this.character) {
                     this.pressed = true;
-                    console.log(event.key, 'PRESSED');
                 }
                 if (this.pressed) {
                     this.playNoise();
@@ -59,8 +63,8 @@
                 //     volume: 0.5,
                 // });
 
-                if (this.model && this.model.howl) {
-                    this.model.howl.play();
+                if (this.noise && this.noise.howl) {
+                    this.noise.howl.play();
                 }
             }
         }
@@ -71,6 +75,6 @@
 
 <style lang="scss" scoped="true">
 
-    @import '../assets/variables';
+    @import '../styles/variables';
 
 </style>

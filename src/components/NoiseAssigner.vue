@@ -17,12 +17,12 @@
                 Assign Noise
             </h3>
 
-            <div class="body">
+            <div class="body container-fluid">
                 
                 <div class="setup">
 
                     <div class="inline-field">
-                        <label for="">Rename noise:</label>
+                        <label for="">Name it:</label>
                         <input type="text" v-model="noiseName">
                     </div>
 
@@ -38,7 +38,11 @@
                     
                 </div>
 
-                <Board :model="board" v-on:set-to-key="assignNoise($event)"></Board>
+                <Board
+                    :model="board"
+                    v-on:assign-noise="assignNoise($event)"
+                    v-on:unassign-noise="unassignNoise($event)">
+                </Board>
 
             </div>
         </div>
@@ -63,7 +67,9 @@
 
         watch: { 
             noise: function(newVal, oldVal) {
-              console.log('Prop changed: ', newVal, ' | was: ', oldVal);
+                if (newVal) {
+                    this.noiseName = `${newVal.name}`;
+                }
             }
         },
 
@@ -84,15 +90,9 @@
                         this.initialized = true;
                     }
                     return state.boards;
-                },
-                // board: function (state) {
-                //     console.log('UPDATE BOARD');
-                //     const id = this.$route.params.id;
-                //     return find(state.boards, (board) => {
-                //         return board.id === this.selectedBoard;
-                //     });
-                // }
+                }
             }),
+
             board: function () {
                 return find(this.boards, (board) => {
                     return board.id === this.selectedBoard;
@@ -102,11 +102,20 @@
 
         methods: {
 
-            ...mapActions(['assignNoiseToBoard']),
+            ...mapActions([
+                'assignNoiseToBoard',
+                'unassignNoiseFromBoard'
+            ]),
+
+            unassignNoise: function (key) {
+                console.log('unassign', key);
+                this.unassignNoiseFromBoard({
+                    boardId: this.selectedBoard,
+                    key
+                });
+            },
 
             assignNoise: function (key) {
-                console.log('SETTING', this.noise.name, 'TO', key)
-
                 this.assignNoiseToBoard({
                     boardId: this.selectedBoard,
                     key,
@@ -143,9 +152,9 @@
 
             .body {
                 .setup {
-                    display: flex;
-                    flex-direction: row;
-                    justify-content: center;
+                    // display: flex;
+                    // flex-direction: row;
+                    // justify-content: center;
                     margin-bottom: 2rem;
 
                     label {

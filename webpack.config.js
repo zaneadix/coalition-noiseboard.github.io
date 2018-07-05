@@ -20,15 +20,25 @@ module.exports = {
                 use: {
                     loader: 'style!css!sass'
                 }
+            },
+            {
+                test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+                use: [{
+                    loader: 'file-loader',
+                    options: {
+                        name: '[name].[ext]',
+                        outputPath: 'assets/fonts/'
+                    }
+                }]
             }
         ]
     },
     // plugins: [
     //     new CopyPlugin([{
-    //         from: 'src/assets/*.html',
-    //         to: '',
-    //         flatten: true,
-    //         toType: 'file'
+    //         from: 'src/assets',
+    //         to: 'docs/assets',
+    //         // flatten: true,
+    //         // toType: 'file'
     //     }])
     // ],
     devServer: {

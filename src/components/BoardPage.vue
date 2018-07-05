@@ -1,14 +1,31 @@
 
 <template>
-    
-    <div v-if="board">
-        <div class="header">
-            <h1 class="name">{{ board.name }}</h1>
+    <div class="container-fluid">
+        <div v-if="board">
+            <div class="header">
+                <h1 class="name">{{ board.name }}</h1>
+            </div>
+            <Board
+                :model="board"
+                v-on:noise-clicked="displayNoiseEditor($event)"
+                interactive="true">
+            </Board>
+            
+            <div class="row noise-editors">
+                
+                <NoiseEditor
+                    v-for="clicked in clickedNoises"
+                    :noise="clicked.noise"
+                    :character="clicked.key">
+                </NoiseEditor>
+
+            </div>
+
         </div>
-        <Board :model="board" interactive="true"></Board>
+        <div v-else class="header">
+            <h1>Nope.</h1>
+        </div>
     </div>
-    
-    
 </template>
 
 <script>
@@ -18,13 +35,21 @@
     import find from 'lodash/find';
     import { Howl } from 'howler';
     import Board from './Board.vue';
+    import NoiseEditor from './NoiseEditor.vue';
     
     export default {
 
         name: 'board-page',
 
         components: {
-            Board
+            Board,
+            NoiseEditor
+        },
+
+        data: function () {
+            return {
+                clickedNoises: []
+            }
         },
 
         computed: {
@@ -35,8 +60,18 @@
                         return board.id === id;
                     });
                 }
-
             })
+        },
+
+        methods: {
+            displayNoiseEditor: function (key) {
+                console.log('display detail for noise at', key);
+
+                this.clickedNoises.push({
+                    key,
+                    noise: this.board.keys[key]
+                });
+            }
         }
     }
 
@@ -45,7 +80,7 @@
 
 <style lang="scss" scoped="true">
 
-    @import '../assets/variables';
+    @import '../styles/variables';
 
     .header {
         height: 5rem;
@@ -53,7 +88,7 @@
         justify-content: center;
         margin-bottom: 40px;
 
-        .name {
+        h1 {
             text-align: center;
             margin-bottom: 0;
             margin-top: auto;

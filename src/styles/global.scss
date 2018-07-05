@@ -1,16 +1,22 @@
 @import '~bootstrap/scss/bootstrap.scss';
 @import './variables';
 
-html {
-        // font-size: 14px;
+// @font-face {
+//   font-family: "Sanchez Bold";
+//   src: url("assets/fonts/sanchez-bold.woff") format("woff"),
+//        url("assets/fonts/sanchez-bold.woff") format("woff2");
+// }
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Suez One";
 }
 
 body {
     background-color: $white;
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    font-family: 'Source Sans Pro', 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    color: $blue;
+    color: $black;
 }
 
 button {
@@ -18,7 +24,7 @@ button {
 }
 
 .soft-text {
-    color: lighten(#000, 80%);
+    color: $light-grey;
 }
 
 .modal-container {
@@ -27,7 +33,7 @@ button {
     bottom: 0;
     right: 0;
     left: 0;
-    background-color: rgba(54, 68, 79, .7);
+    background-color: rgba($black, .7);
     z-index: 999;
     display: flex;
     align-items: center;
@@ -61,11 +67,11 @@ button {
     border: 0;
     background-color: transparent;
     line-height: 0;
-    color: $blue;
+    color: $black;
 
 
     .icon {
-        color: $blue;
+        color: $red;
         height: 1.2rem;
         width: 1.2rem;
     }
@@ -88,7 +94,7 @@ button {
 
     &:active {
         .icon {
-            color: darken($orange, 20%);
+            color: $dark-red;
         }
     }
     
@@ -99,70 +105,50 @@ button {
 
         &:hover {
             .icon {
-                color: $orange;
+                color: $red;
             }
         }
 
         &:active {
             .icon {
-                color: darken($orange, 20%);
+                color: $dark-red;
             }
         }
     }
 }
 
-#coalition-noiseboard {
+// #coalition-noiseboard {
 
-    display: flex;
-    flex-grow: 1;
-    overflow: hidden;
-    height: 100vh;
+
 
     .sidebar {
-        background-color: $blue;
-        width: 240px;
+        // background-color: $;
+        width: 220px;
         flex-shrink: 0;
-        color: $white;
-
-        .brand {
-            display: flex;
-            padding-left: 1rem;
-            border-bottom: 1px solid $white; 
-            margin-bottom: 1rem;
-            align-items: center;
-            height: 5rem;
-
-            .logo {
-                height: 3rem;
-                width: 3rem;
-                margin-right: .5rem;
-            }
-
-            .name {
-                font-size: 1.3rem;
-                line-height: 1.4rem;
-            }
-        }
+        border-right: 1px solid $shadow;
+        // color: $white;
 
         ul {
             list-style: none;
             padding: 0;
             margin: 0;
 
-            li a, .title {
-                padding: 0 1rem;
+            li.title {
+                // padding: 0 1rem;
+                padding-left: 1rem;
             }
 
             li {
                 margin-bottom: .5rem;
                 a {
-                    color: $white;
                     padding-left: 1rem;
                     display: inline-block;
                     width: 100%;
-                    &:hover {
+                    &.router-link-exact-active {
+                        color: $white;
                         text-decoration: none;
-                        background-color: darken($blue, 10%);
+                        background-color: $red;
+                        font-weight: 600;
                     }
                 }
             }
@@ -191,39 +177,49 @@ button {
     }
 
     .key {
-        height: 5rem;
-        width: 6rem;
+        height: 5.5rem;
+        width: 10%;
         margin-right: .5rem;
         padding: 0;
         border-radius: 3px;
-        background-color: rgba(255,75,56,.1);
+        // background-color: $red;
 
         &.active {
             padding: 2px;
 
             .key-body {
-                // box-shadow: 3px 3px 6px rgba(255,75,56,.2), -3px 3px 6px rgba(255,75,56,.2);
-
+                box-shadow: 2px 2px 4px rgba(255,75,56, 0.25), -2px 2px 4px rgba(255,75,56, 0.25);
                 .character {
-                    color: $orange;
+                    color: $red;
                     font-weight: bold;
                 }
             }
         }
 
         .key-body {
+            border: 1px solid $shadow;
+            position: relative;
+            cursor: pointer;
             display: flex;
             height: 100%;
             position: relative;
             background-color: #FFF;
             border-radius: 3px;
-            box-shadow: 3px 3px 6px rgba(0,0,0,.1), -3px 3px 6px rgba(0,0,0,.1);
+            box-shadow: 2px 2px 4px rgba(0,0,0,.1), -2px 2px 4px rgba(0,0,0,.1);
             align-items: center;
             justify-content: center;
+            padding: .3rem;
+            text-align: center;
+            font-weight: 700;
+
+            .noise-name {
+                font-size: .9rem;
+            }
 
             .character {
                 display: block;
                 position: absolute;
+                color: $slate;
                 content: '';
                 top: 5px;
                 left: 5px;
@@ -235,4 +231,22 @@ button {
             }
         }
     }
+
+
+.container, .container-fluid {
+    padding: 0 1rem;
+}
+
+.form-control {
+    &:focus {
+        border-color: $red;
+        box-shadow: 0 0 0 0.2rem rgba(255,75,56, 0.25);
+    }
+    &::placeholder {
+        color: $grey;
+    }
+}
+
+a:hover {
+    text-decoration: none;
 }

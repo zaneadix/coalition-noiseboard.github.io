@@ -16,7 +16,7 @@
     export default {
         name: 'noise'
         props: ['data'],
-        compouted: {
+        computed: {
             ...mapState({
                 noiseCategories: state => {
                     return Object.getOwnPropertyNames(state.noises);

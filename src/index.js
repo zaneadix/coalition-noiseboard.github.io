@@ -7,6 +7,7 @@ import BoardPage from './components/BoardPage.vue';
 import store from './store';
 
 const router = new VueRouter({
+    mode: 'history',
     routes: [{
         path: '/',
         name: 'noise-inventory',

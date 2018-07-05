@@ -13,6 +13,8 @@
     "bootstrap": "4.1.1",
     "copy-webpack-plugin": "4.5.0",
     "css-loader": "^0.28.11",
+    "file-loader": "1.1.11",
+    "firebase": "5.2.0",
     "github-api": "3.0.0",
     "howler": "2.0.9",
     "lodash-es": "4.17.7",
