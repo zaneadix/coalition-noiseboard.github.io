@@ -1,7 +1,7 @@
 
 <template>
-    <div class="container-fluid">
-        <div v-if="board">
+    <div id="board-page" class="container-fluid">
+        <div class="page-wrapper" v-if="board">
             <div class="header">
                 <h1 class="name">{{ board.name }}</h1>
             </div>
@@ -11,12 +11,11 @@
                 interactive="true">
             </Board>
             
-            <div class="row noise-editors">
+            <div class="noise-editor-container" v-if="selected">
                 
                 <NoiseEditor
-                    v-for="clicked in clickedNoises"
-                    :noise="clicked.noise"
-                    :character="clicked.key">
+                    :noise="selected.noise"
+                    :character="selected.key">
                 </NoiseEditor>
 
             </div>
@@ -33,9 +32,16 @@
     import { mapState, mapActions } from 'vuex';
     import { routerLink } from 'vue-router';
     import find from 'lodash/find';
-    import { Howl } from 'howler';
+    import { Howler } from 'howler';
     import Board from './Board.vue';
     import NoiseEditor from './NoiseEditor.vue';
+    import { STOP_ALL_NOISES } from '../const';
+
+    /*
+        global mute
+        global volume
+
+     */
     
     export default {
 
@@ -48,29 +54,37 @@
 
         data: function () {
             return {
-                clickedNoises: []
+                selected: null
             }
+        },
+        
+        beforeRouteUpdate: function (to, from, next) {
+            document.dispatchEvent(new Event(STOP_ALL_NOISES));
+            next();
         },
 
         computed: {
             ...mapState({
                 board: function (state) {
                     const id = this.$route.params.id;
-                    return find(state.boards, (board) => {
+                    const board = find(state.boards, (board) => {
                         return board.id === id;
                     });
+                    if (board) {
+                        document.title = board.name;
+                    }
+                    return board;
                 }
             })
         },
 
         methods: {
-            displayNoiseEditor: function (key) {
-                console.log('display detail for noise at', key);
 
-                this.clickedNoises.push({
+            displayNoiseEditor: function (key) {
+                this.selected = {
                     key,
                     noise: this.board.keys[key]
-                });
+                };
             }
         }
     }
@@ -82,20 +96,37 @@
 
     @import '../styles/variables';
 
-    .header {
-        height: 5rem;
-        display: flex;
-        justify-content: center;
-        margin-bottom: 40px;
+    #board-page {
 
-        h1 {
-            text-align: center;
-            margin-bottom: 0;
-            margin-top: auto;
-            font-size: 2rem;
-            line-height: 2rem;
-    
+        .page-wrapper {
+
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+
+            .header {
+                height: 4rem;
+                display: flex;
+                justify-content: center;
+                margin-bottom: 40px;
+
+                h1 {
+                    text-align: center;
+                    margin-bottom: 0;
+                    margin-top: auto;
+                    font-size: 2rem;
+                    line-height: 2rem;
+            
+                }
+            }
+
+            .noise-editor-container {
+                margin-top: auto;
+                background-color: #fff;
+            }
         }
     }
+
+    
 
 </style>

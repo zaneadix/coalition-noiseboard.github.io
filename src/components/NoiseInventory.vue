@@ -60,12 +60,6 @@
             NoiseAssigner
         },
 
-        created: function () {
-            window.addEventListener('keyup', (event) => {
-                console.log(event);
-            })  
-        },
-
         data: function () {
             return {
                 currentNoise: null,
@@ -91,9 +85,6 @@
                     return categories;
                 },
                 noises: state =>  {
-
-                    console.log('computing noises');
-
                     return state.noises;
                 }
             })

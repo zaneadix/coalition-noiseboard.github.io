@@ -63,11 +63,11 @@
             }
         },
 
-        watch: {
-            model: function (model) {
-                console.log('setting model', model)
-            }
-        },
+        // watch: {
+        //     model: function (model) {
+        //         console.log('setting model', model)
+        //     }
+        // },
 
         data: () => {
             return {

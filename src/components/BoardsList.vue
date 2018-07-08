@@ -5,7 +5,7 @@
         <ul v-if="boards">
             <li class="title">
                 <strong>Boards</strong>
-                <button class="board-adder icon-button inverse"
+                <button class="board-adder icon-button"
                     v-on:click="initNewBoard()">
                     <svg class="icon">
                         <use xlink:href="#icon-plus-square"></use>
@@ -64,7 +64,7 @@
             ...mapActions(['createBoard']),
 
             checkPress: function (event) {
-                console.log(event);
+
                 if (this.nameFieldHasFocus && event.key === 'Enter') {
                     this.createBoard(this.nameFieldValue);
                     this.clearNameField();

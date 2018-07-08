@@ -84,7 +84,6 @@
         computed: {
             ...mapState({
                 boards: function (state) {
-                    console.log('UPDATE BOARDS');
                     if (state.boards.length && !this.initialized) {
                         this.selectedBoard = state.boards[0].id;
                         this.initialized = true;
@@ -108,7 +107,6 @@
             ]),
 
             unassignNoise: function (key) {
-                console.log('unassign', key);
                 this.unassignNoiseFromBoard({
                     boardId: this.selectedBoard,
                     key
