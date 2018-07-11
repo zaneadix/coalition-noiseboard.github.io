@@ -182,15 +182,16 @@ button {
         margin-right: .5rem;
         padding: 0;
         border-radius: 3px;
-        // background-color: $red;
 
         &.active {
             padding: 2px;
 
             .key-body {
-                box-shadow: 2px 2px 4px rgba(255,75,56, 0.25), -2px 2px 4px rgba(255,75,56, 0.25);
+                background-color: $black;
+                color: #FFF;
+                // box-shadow: 2px 2px 4px rgba(255,75,56, 0.25), -2px 2px 4px rgba(255,75,56, 0.25);
                 .character {
-                    color: $red;
+                    color: #FFF;
                     font-weight: bold;
                 }
             }
@@ -205,7 +206,7 @@ button {
             position: relative;
             background-color: #FFF;
             border-radius: 3px;
-            box-shadow: 2px 2px 4px rgba(0,0,0,.1), -2px 2px 4px rgba(0,0,0,.1);
+            // box-shadow: 2px 2px 4px rgba(0,0,0,.1), -2px 2px 4px rgba(0,0,0,.1);
             align-items: center;
             justify-content: center;
             padding: .3rem;
@@ -229,6 +230,57 @@ button {
                 z-index: 1;
                 text-align: center;
             }
+        }
+
+        @mixin keyColor ($color) {
+            .key-body {
+                background-color: lighten($color, 32%);
+            }
+
+            &.active {
+                .key-body {
+                    // box-shadow: 4px 4px 6px rgba($color, 0.8), -4px 4px 6px rgba($color, 0.8);
+                    background-color: $color;
+                    color: #FFF;
+                    .character {
+                        color: #FFF;
+                        // font-size: 90%;
+                        // font-weight: bold;
+                    }
+                }
+            }
+        }
+
+        &.red {
+            @include keyColor($key-red);
+        }
+
+        &.orange {
+            @include keyColor($key-orange);
+        }
+
+        &.yellow {
+            @include keyColor($key-yellow);
+        }
+
+        &.green {
+            @include keyColor($key-green);
+        }
+
+        &.turqoise {
+            @include keyColor($key-turqoise);
+        }
+
+        &.blue {
+            @include keyColor($key-blue);
+        }
+
+        &.royal {
+            @include keyColor($key-royal);
+        }
+
+        &.purple {
+            @include keyColor($key-purple);
         }
     }
 

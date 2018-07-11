@@ -2,7 +2,7 @@
 <template>
 
     <div class="key noise-key"
-         v-bind:class="{ active: pressed }">
+         v-bind:class="[color, { active: pressed }]">
         <div class="key-body" v-on:click="checkClick()">
             
             <div
@@ -38,6 +38,7 @@
         data: function () {
             return {
                 pressed: false,
+                color: '',
                 // playbackPosition: 0
                 playbackPercentages: []
             }
@@ -47,9 +48,10 @@
             noise: {
                 deep: true,
                 handler: function (newVal, oldVal) {
-                    console.log(newVal, Object.values(newVal.playbackPercentages));
                     this.playbackPercentages = newVal.playbackPercentages;
-                    // this.playbackPosition = newVal.playbackPercentage;
+                    console.log(newVal.color);
+                    this.color = newVal.color;
+
                 }
             }
         },
@@ -122,7 +124,7 @@
             top: 0;
             left: 0;
             bottom: 0;
-            background-color: black;
+            background-color: #000;
             opacity: .05;
             z-index: 0;
         }

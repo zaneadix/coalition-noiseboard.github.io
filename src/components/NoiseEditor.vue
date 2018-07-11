@@ -52,6 +52,115 @@
                     </div>
 
                 </form>
+
+                <form>
+                    
+                    <div class="form-check form-check-inline">
+
+                        <label class="check-wrap white">
+                            <input
+                                class="form-check-input"
+                                type="radio"
+                                name="color-white"
+                                id="color-white"
+                                value="white"
+                                v-model="noise.color">
+                            <span></span>
+                        </label>
+                        
+                        <label class="check-wrap red">
+                            <input
+                                class="form-check-input"
+                                type="radio"
+                                name="color-red"
+                                id="color-red"
+                                value="red"
+                                v-model="noise.color">
+                            <span></span>
+                        </label>
+
+                        <label class="check-wrap orange">
+                            <input
+                                class="form-check-input"
+                                type="radio"
+                                name="color-orange"
+                                id="color-orange"
+                                value="orange"
+                                v-model="noise.color">
+                            <span></span>
+                        </label>
+
+                        <label class="check-wrap yellow">
+                            <input
+                                class="form-check-input"
+                                type="radio"
+                                name="color-yellow"
+                                id="color-yellow"
+                                value="yellow"
+                                v-model="noise.color">
+                            <span></span>
+                        </label>
+
+                        <label class="check-wrap green">
+                            <input
+                                class="form-check-input"
+                                type="radio"
+                                name="color-green"
+                                id="color-green"
+                                value="green"
+                                v-model="noise.color">
+                            <span></span>
+                        </label>
+
+
+                        <label class="check-wrap turqoise">
+                            <input
+                                class="form-check-input"
+                                type="radio"
+                                name="color-turqoise"
+                                id="color-turqoise"
+                                value="turqoise"
+                                v-model="noise.color">
+                            <span></span>
+                        </label>
+
+                        <label class="check-wrap blue">
+                            <input
+                                class="form-check-input"
+                                type="radio"
+                                name="color-blue"
+                                id="color-blue"
+                                value="blue"
+                                v-model="noise.color">
+                            <span></span>
+                        </label>
+
+                        <label class="check-wrap royal">
+                            <input
+                                class="form-check-input"
+                                type="radio"
+                                name="color-royal"
+                                id="color-royal"
+                                value="royal"
+                                v-model="noise.color">
+                            <span></span>
+                        </label>
+
+                        <label class="check-wrap purple">
+                            <input
+                                class="form-check-input"
+                                type="radio"
+                                name="color-purple"
+                                id="color-purple"
+                                value="purple"
+                                v-model="noise.color">
+                            <span></span>
+                        </label>
+
+                    </div>
+
+                </form>
+
             </div>
         </div>
     </div>
@@ -123,6 +232,76 @@
         height: 240px;
         box-shadow: $standard-shadow;
         border: 1px solid $shadow;
+
+        @mixin checkColor ($color) {
+            & > span {
+                background-color: lighten($color, 32%);
+                border-color: $color;
+            }
+        }
+
+
+        label.check-wrap {
+
+            margin-right: .3rem;
+
+            &:last-of-type {
+                margin-right: 0;
+            }
+
+
+            & > span {
+                content: '';
+                display: inline-block;
+                width: 1rem;
+                height: 1rem;
+                box-sizing: border-box;
+                border: 1px solid;
+                border-radius: 50%;
+            }
+
+            .form-check-input[type=radio] {
+
+                display: none;
+
+                &:checked ~ span {
+                    border-width: .3rem;
+                }
+            }
+
+            &.red {
+                @include checkColor($key-red);
+            }
+
+            &.orange {
+                @include checkColor($key-orange);
+            }
+
+            &.yellow {
+                @include checkColor($key-yellow);
+            }
+
+            &.green {
+                @include checkColor($key-green);
+            }
+
+            &.turqoise {
+                @include checkColor($key-turqoise);
+            }
+
+            &.blue {
+                @include checkColor($key-blue);
+            }
+
+            &.royal {
+                @include checkColor($key-royal);
+            }
+
+            &.purple {
+                @include checkColor($key-purple);
+            }
+        }
+        
     }
 
 </style>
