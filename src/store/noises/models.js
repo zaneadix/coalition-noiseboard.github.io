@@ -2,7 +2,7 @@
 import Vue from 'vue';
 import { Howl } from 'howler';
 import { NOISE_PLAY, STOP_ALL_NOISES } from '../../const';
-
+import findKey from 'lodash/findKey';
 
 export class NoisePreview {
     constructor () {
@@ -34,30 +34,24 @@ export class Noise {
 
         this.name = '';
         this._source = null;
-        this.color = 'white';
+        this._defaults = null;
+
+        this.howl = null;
+        this.activeGlobalStop = null;
+        this.playbackPosition = 0;
+        this.playbackPercentages = {};
+        this.settingsChanged = false;
+
+        document.addEventListener(STOP_ALL_NOISES, this.stop.bind(this));
+
         this.defaults = {
             globalStop: false,
             loop: false,
             rate: 1,
             solo: false,
             volume: 1,
+            color: 'white'
         };
-
-
-        this.howl = null;
-        this.playbackPosition = 0;
-        this.activeGlobalStop = null;
-        this.playbackPercentages = {};
-
-        document.addEventListener(STOP_ALL_NOISES, this.stop.bind(this));
-
-        /**
-         * settings duplicate defaults on init
-         * making it easy to save adjusted settings
-         * as defaults or reset to default state
-         */
-        this.settings = Object.assign({}, this.defaults);
-        
     }
 
     play () {
@@ -124,6 +118,34 @@ export class Noise {
         return (playbackPosition / this.howl.duration()) * 100;
     }
 
+    haveSettingsChanged (currentChangeKey) {
+
+        if (!this.defaults[currentChangeKey]) {
+            this.settingsChanged = true;
+            return;
+        }
+
+        const changed = findKey(this.settings, (value, key) => {
+            return this.settings[key] != this.defaults[key];
+        });
+
+        if (changed) {
+            this.settingsChanged = true;
+        } else {
+            this.settingsChanged = false;
+        }
+    }
+
+
+    get defaults () {
+        return this._defaults;
+    }
+
+    set defaults (defaults) {
+        this._defaults = defaults;
+        this.settings = Object.assign({}, this.defaults);
+    }
+
 
     get source () {
         return this._source;
@@ -139,6 +161,19 @@ export class Noise {
         this._source = src;
     }
 
+
+    /**
+     * Duh
+     */ 
+    get color () {
+        return this.settings.color;
+    }
+
+    set color (color) {
+        this.settings.color = color;
+        this.haveSettingsChanged('color');
+    }
+
     
     /**
      * Should noise loop.
@@ -150,6 +185,7 @@ export class Noise {
     set loop (value) {
         this.settings.loop = value;
         this.howl.loop(this.settings.loop);
+        this.haveSettingsChanged('loop');
     }
 
 
@@ -162,6 +198,7 @@ export class Noise {
 
     set solo (value) {
         this.settings.solo = value;
+        this.haveSettingsChanged('solo');
     }
 
 
@@ -185,20 +222,27 @@ export class Noise {
 
             document.removeEventListener(NOISE_PLAY, this.activeGlobalStop);
         }
-    }
 
+        this.haveSettingsChanged('globalStop');
+    }
 
     get saveData () {
         return  {
             name: this.name,
-            defaults: this.defaults,
+            defaults: this.settings,
             source: this.source
         }
     }
 
     static fromData (data) {
+        
         const noise = new Noise();
         const returnValue = Object.assign(noise, data);
-        return returnValue
+        if (data.name === 'Ticking') {
+            console.log(data);
+            console.log(returnValue);
+        }
+
+        return returnValue;
     }
 }

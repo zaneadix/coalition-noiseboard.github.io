@@ -49,9 +49,8 @@
                 deep: true,
                 handler: function (newVal, oldVal) {
                     this.playbackPercentages = newVal.playbackPercentages;
-                    console.log(newVal.color);
                     this.color = newVal.color;
-
+                    console.log(this.color);
                 }
             }
         },

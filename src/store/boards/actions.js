@@ -1,5 +1,6 @@
  
 import find from 'lodash/find';
+import findIndex from 'lodash/findIndex';
 import map from 'lodash/map';
 import mapKeys from 'lodash/mapKeys';
 import firebase from 'firebase/app';
@@ -64,6 +65,29 @@ export const unassignNoiseFromBoard = ({ commit, state }, { boardId, key }) => {
             commit(
                 'unassignNoiseFromBoard',
                 { boardId, key }
+            )
+        });
+}
+
+export const saveBoardNoiseDefaults = ({commit, state}, { boardId, key }) => {
+
+    const boardIndex =  findIndex(state.boards, board => {
+        return board.id === boardId;
+    });
+
+    const board = state.boards[boardIndex];
+    const defaults = board.keys[key].settings;
+
+    const update = {};
+    update[`keys.${key}.defaults`] = defaults;
+
+    boardsRef
+        .doc(boardId)
+        .update(update)
+        .then(() => {
+            commit(
+                'saveBoardNoiseDefaults',
+                { boardId, key, defaults }
             )
         });
 }

@@ -15,7 +15,8 @@
                 
                 <NoiseEditor
                     :noise="selected.noise"
-                    :character="selected.key">
+                    :character="selected.key"
+                    v-on:save-settings="saveSettings($event)">
                 </NoiseEditor>
 
             </div>
@@ -80,11 +81,19 @@
 
         methods: {
 
+            ...mapActions(['saveBoardNoiseDefaults']),
+
             displayNoiseEditor: function (key) {
                 this.selected = {
                     key,
                     noise: this.board.keys[key]
                 };
+            },
+
+            saveSettings: function (key) {
+                console.log('save', key);
+                console.log(this.board);
+                this.saveBoardNoiseDefaults({ boardId: this.board.id, key })
             }
         }
     }

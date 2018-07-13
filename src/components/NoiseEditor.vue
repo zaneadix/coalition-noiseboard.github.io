@@ -161,6 +161,13 @@
 
                 </form>
 
+                <button
+                    class="btn btn-primary"
+                    :disabled="!noise.settingsChanged"
+                    v-on:click="$emit('save-settings', character)">
+                    Save Settings
+                </button>
+
             </div>
         </div>
     </div>
@@ -217,7 +224,10 @@
 
             //     this.clickedNoises.push(this.board.keys[key]);
             // }
-        }
+            saveSettings: function () {
+
+            }
+         }
     }
 
 </script>

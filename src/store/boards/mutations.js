@@ -4,7 +4,7 @@ import findIndex from 'lodash/findIndex';
 const getBoardIndex = (state, boardId) => {
     return findIndex(state.boards, board => {
         return board.id === boardId;
-    })
+    });
 }
 
 export const storeBoardsFile = (state, file) => {
@@ -35,7 +35,6 @@ export const assignNoiseToBoard = (state, { boardId, key, noise }) => {
             key,
             noise
         );
-        // Vue.set(state, 'dirty', true);
     }
 }
 
@@ -48,7 +47,19 @@ export const unassignNoiseFromBoard = (state, { boardId, key }) => {
             state.boards[index].keys,
             key
         );
-        // Vue.set(state, 'dirty', true);
+    }
+}
+
+export const saveBoardNoiseDefaults = (state, { boardId, key, defaults }) => {
+
+    const index = getBoardIndex(state, boardId);
+
+    if (index >= 0) {
+        Vue.set(
+            state.boards[index].keys[key],
+            'defaults',
+            defaults
+        );
     }
 }
 
@@ -58,5 +69,4 @@ export const savingBoards = (state) => {
 
 export const boardsSaved = (state) => {
     state.savingBoards = false;
-    // Vue.set(state, 'dirty', false);
 }
