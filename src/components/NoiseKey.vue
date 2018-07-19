@@ -39,7 +39,6 @@
             return {
                 pressed: false,
                 color: '',
-                // playbackPosition: 0
                 playbackPercentages: []
             }
         },
@@ -48,9 +47,13 @@
             noise: {
                 deep: true,
                 handler: function (newVal, oldVal) {
-                    this.playbackPercentages = newVal.playbackPercentages;
-                    this.color = newVal.color;
-                    console.log(this.color);
+                    if (newVal) {
+                        this.playbackPercentages = newVal.playbackPercentages;
+                        this.color = newVal.color;
+                    } else {
+                        this.playbackPercentages = [];
+                        this.color = '';
+                    }
                 }
             }
         },

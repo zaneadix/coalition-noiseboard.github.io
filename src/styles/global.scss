@@ -307,9 +307,14 @@ a:hover {
 
     font-weight: bold;
 
-
+    svg {
+        color: #FFF;
+    }
 
     &.btn-primary {
+
+            background-color: $red;
+            border-color: $red;
 
             &:disabled {
                 background-color: $red;
@@ -317,9 +322,6 @@ a:hover {
             }
 
             &:not(:disabled):not(.disabled) {
-
-            background-color: $red;
-            border-color: $red;
 
             &:active {
                 background-color: $dark-red;

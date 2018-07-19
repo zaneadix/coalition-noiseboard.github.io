@@ -4,12 +4,47 @@
     <div class="noise-editor container-fluid">
         <div class="row">
             <div class="col">
-                {{ character }}
+
+                <form class="form-inline noise-name-form">
+                    <div class="input-group flex-grow-1" >
+                        <div class="input-group-prepend">
+                            <span class="input-group-text character" :class="[noise.color]">{{ character | title }}</span>
+                        </div>
+                        <input
+                            type="text"
+                            class="form-control"
+                            v-model="noiseName">
+                    </div>
+                    <button class="icon-button">
+                        <svg class="icon">
+                            <use xlink:href="#icon-save"></use>
+                        </svg>
+                    </button>
+                </form>
+
+                <div class="form-group">
+                    <label for="volume-setting">Volume ({{Math.floor(noise.volume)}})</label>
+                    <input
+                        type="range"
+                        class="form-control-range"
+                        id="volume-setting"
+                        v-model="noise.volume">
+                </div>
+
+                <div class="form-group">
+                    <label for="rate-setting">Playback Speed (x{{noise.rate/100}})</label>
+                    <input
+                        type="range"
+                        class="form-control-range"
+                        id="rate-setting"
+                        max="400"
+                        min="50"
+                        v-model="noise.rate">
+                </div>
             </div>
+
             <div class="col">
-                {{ noise.name }}
-            </div>
-            <div class="col">
+
                 <form>
 
                     <div class="form-check">
@@ -54,10 +89,10 @@
                 </form>
 
                 <form>
-                    
+
                     <div class="form-check form-check-inline">
 
-                        <label class="check-wrap white">
+                        <label for="color-white" class="check-wrap white">
                             <input
                                 class="form-check-input"
                                 type="radio"
@@ -68,7 +103,7 @@
                             <span></span>
                         </label>
                         
-                        <label class="check-wrap red">
+                        <label for="color-red" class="check-wrap red">
                             <input
                                 class="form-check-input"
                                 type="radio"
@@ -79,7 +114,7 @@
                             <span></span>
                         </label>
 
-                        <label class="check-wrap orange">
+                        <label for="color-orange" class="check-wrap orange">
                             <input
                                 class="form-check-input"
                                 type="radio"
@@ -90,7 +125,7 @@
                             <span></span>
                         </label>
 
-                        <label class="check-wrap yellow">
+                        <label for="color-yellow" class="check-wrap yellow">
                             <input
                                 class="form-check-input"
                                 type="radio"
@@ -101,7 +136,7 @@
                             <span></span>
                         </label>
 
-                        <label class="check-wrap green">
+                        <label for="color-green" class="check-wrap green">
                             <input
                                 class="form-check-input"
                                 type="radio"
@@ -113,7 +148,7 @@
                         </label>
 
 
-                        <label class="check-wrap turqoise">
+                        <label for="color-turqoise" class="check-wrap turqoise">
                             <input
                                 class="form-check-input"
                                 type="radio"
@@ -124,7 +159,7 @@
                             <span></span>
                         </label>
 
-                        <label class="check-wrap blue">
+                        <label for="color-blue" class="check-wrap blue">
                             <input
                                 class="form-check-input"
                                 type="radio"
@@ -135,7 +170,7 @@
                             <span></span>
                         </label>
 
-                        <label class="check-wrap royal">
+                        <label for="color-royal" class="check-wrap royal">
                             <input
                                 class="form-check-input"
                                 type="radio"
@@ -146,7 +181,7 @@
                             <span></span>
                         </label>
 
-                        <label class="check-wrap purple">
+                        <label for="color-purple" class="check-wrap purple">
                             <input
                                 class="form-check-input"
                                 type="radio"
@@ -160,6 +195,10 @@
                     </div>
 
                 </form>
+
+            </div>
+            <div class="col">
+                
 
                 <button
                     class="btn btn-primary"
@@ -175,16 +214,6 @@
 </template>
 
 <script>
-
-    /*
-        adjust volume
-        mute
-        loop
-        adjust speed?
-        stop on any new sound
-        solo
-        reset on replay
-     */
     
     export default {
 
@@ -195,17 +224,21 @@
         data: function () {
             return {
                 settingsInitialized: false,
-                noiseSettings: null,
+                // noiseSettings: null,
+                noiseName: ''
             }
         },
 
-        watch: {
-            noise: function (newValue, oldValue) {
-                if (this.settingsInitialized) {
-                    this.noiseSettings
-                }
-            }
-        },
+        // watch: {
+        //     noise: {
+        //         deep: true,
+        //         handler: function (newValue, oldValue) {
+        //             if (this.settingsInitialized) {
+        //                 this.noiseSettings
+        //             }
+        //         }
+        //     }
+        // },
 
         computed: {
             // ...mapState({
@@ -242,6 +275,48 @@
         height: 240px;
         box-shadow: $standard-shadow;
         border: 1px solid $shadow;
+        padding: 1rem;
+
+        .noise-name-form {
+
+            @mixin characterColor ($color) {
+                // color: #FFF;
+                background-color: lighten($color, 32%);
+                // border-color: $color;
+            }
+
+            .character {
+                font-weight: bold;
+                color: $black;
+                background-color: $white;
+                &.red { @include characterColor($key-red); }
+                &.orange { @include characterColor($key-orange); }
+                &.yellow { @include characterColor($key-yellow); }
+                &.green { @include characterColor($key-green) }
+                &.turqoise { @include characterColor($key-turqoise) }
+                &.blue { @include characterColor($key-blue) }
+                &.royal { @include characterColor($key-royal) }
+                &.purple { @include characterColor($key-purple) }
+            }
+        }
+
+        // .character {
+        //     display: block;
+        //     position: absolute;
+        //     color: $slate;
+        //     content: '';
+        //     top: 5px;
+        //     left: 5px;
+        //     font-size: 80%;
+        //     line-height: 80%;
+        //     opacity: 1;
+        //     z-index: 1;
+        //     text-align: center;
+        // }
+
+        .noise-name-form {
+            align-items: space-between;
+        }
 
         @mixin checkColor ($color) {
             & > span {

@@ -34,7 +34,7 @@ export class Noise {
 
         this.name = '';
         this._source = null;
-        this._defaults = null;
+        this._defaults = {};
 
         this.howl = null;
         this.activeGlobalStop = null;
@@ -142,7 +142,7 @@ export class Noise {
     }
 
     set defaults (defaults) {
-        this._defaults = defaults;
+        this._defaults = Object.assign({}, this._defaults, defaults);
         this.settings = Object.assign({}, this.defaults);
     }
 
@@ -202,6 +202,33 @@ export class Noise {
     }
 
 
+     /**
+     * Duh
+     */
+    get volume () {
+        return this.settings.volume * 100;
+    }
+
+    set volume (value) {
+        this.settings.volume = value/100;
+        this.howl.volume(this.settings.volume);
+        this.haveSettingsChanged('volume');
+    }
+
+    /**
+     * Playback Rate
+     */
+    get rate () {
+        return this.settings.rate * 100;
+    }
+
+    set rate (value) {
+        this.settings.rate = value/100;
+        this.howl.rate(this.settings.rate);
+        this.haveSettingsChanged('rate');
+    }
+
+
     /**
      * Stop playback if any other noise is played.
      */
@@ -238,10 +265,7 @@ export class Noise {
         
         const noise = new Noise();
         const returnValue = Object.assign(noise, data);
-        if (data.name === 'Ticking') {
-            console.log(data);
-            console.log(returnValue);
-        }
+
 
         return returnValue;
     }
