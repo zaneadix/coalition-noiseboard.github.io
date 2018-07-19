@@ -47,9 +47,9 @@ export class Noise {
         this.defaults = {
             globalStop: false,
             loop: false,
-            rate: 1,
+            rate: 100,
             solo: false,
-            volume: 1,
+            volume: 100,
             color: 'white'
         };
     }
@@ -206,12 +206,12 @@ export class Noise {
      * Duh
      */
     get volume () {
-        return this.settings.volume * 100;
+        return this.settings.volume;
     }
 
     set volume (value) {
-        this.settings.volume = value/100;
-        this.howl.volume(this.settings.volume);
+        this.settings.volume = value;
+        this.howl.volume(this.settings.volume/100);
         this.haveSettingsChanged('volume');
     }
 
@@ -219,12 +219,12 @@ export class Noise {
      * Playback Rate
      */
     get rate () {
-        return this.settings.rate * 100;
+        return this.settings.rate;
     }
 
     set rate (value) {
-        this.settings.rate = value/100;
-        this.howl.rate(this.settings.rate);
+        this.settings.rate = value;
+        this.howl.rate(this.settings.rate/100);
         this.haveSettingsChanged('rate');
     }
 
@@ -264,7 +264,11 @@ export class Noise {
     static fromData (data) {
         
         const noise = new Noise();
-        const returnValue = Object.assign(noise, data);
+        const returnValue = Object.assign(
+            noise,
+            data,
+            data.defaults
+        );
 
 
         return returnValue;
