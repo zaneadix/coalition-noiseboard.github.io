@@ -122,11 +122,24 @@ button {
 
 
     .sidebar {
-        // background-color: $;
         width: 220px;
         flex-shrink: 0;
         border-right: 1px solid $shadow;
-        // color: $white;
+        overflow: hidden;
+        position: relative;
+
+        .toggle-sidebar {
+            position: absolute;
+            top: .3rem;
+            right: .3rem;
+        }
+
+        &.closed {
+            width: 30px;
+            .brand, ul {
+                display: none;
+            }
+        }
 
         ul {
             list-style: none;
@@ -177,7 +190,7 @@ button {
     }
 
     .key {
-        height: 5.5rem;
+        height: 4rem;
         width: 10%;
         margin-right: .5rem;
         padding: 0;
@@ -214,7 +227,7 @@ button {
             font-weight: 700;
 
             .noise-name {
-                font-size: .9rem;
+                font-size: .7rem;
             }
 
             .character {
@@ -229,6 +242,17 @@ button {
                 opacity: 1;
                 z-index: 1;
                 text-align: center;
+            }
+        }
+
+        @media only screen and (min-width: 1000px)  {
+            height: 5.5rem;
+
+            .key-body {
+                .noise-name {
+                    font-weight: 700;
+                    font-size: 1rem;
+                }
             }
         }
 

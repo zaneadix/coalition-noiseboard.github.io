@@ -16,7 +16,16 @@
             <h2>Loading Stuff</h2>
         </div>
 
-        <div class="sidebar">
+        <div class="sidebar" :class="{ closed: sidebarClosed }">
+
+            <button
+                class="icon-button toggle-sidebar"
+                v-on:click="sidebarClosed = !sidebarClosed">
+                <svg class="icon">
+                    <use xlink:href="#icon-x-circle"></use>
+                </svg>
+            </button>
+
             <div class="brand">
                 <svg class="logo">
                     <use xlink:href="#icon-mask"></use>
@@ -53,6 +62,12 @@
         components: {
             NoiseInventory,
             BoardsList
+        },
+
+        data: function () {
+            return {
+                sidebarClosed: false
+            }
         },
 
         computed: {
