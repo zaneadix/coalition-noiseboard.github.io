@@ -149,10 +149,9 @@
             }
 
             .body {
+                display: block;
+                
                 .setup {
-                    // display: flex;
-                    // flex-direction: row;
-                    // justify-content: center;
                     margin-bottom: 2rem;
 
                     label {

@@ -21,7 +21,7 @@
                     v-model="nameFieldValue"
                     :autoFocus="editNameField"
                     @focus="nameFieldHasFocus = true"
-                    @blue="nameFieldHasFocus = false"
+                    @blur="nameFieldHasFocus = false"
                     type="text">
             </li>
             <li v-for="board in boards">

@@ -25,6 +25,31 @@ export const addBoard = (state, board) => {
     // Vue.set(state, 'dirty', true);
 }
 
+export const deletingBoard = (state, boardId) => {
+
+    const index = getBoardIndex(state, boardId);
+
+    if (index >= 0) {
+        Vue.set(
+            state.boards[index],
+            'deleting',
+            true
+        );
+    }
+}
+
+export const boardDeleted = (state, boardId) => {
+
+    const index = getBoardIndex(state, boardId);
+
+    if (index >= 0) {
+        Vue.delete(
+            state.boards,
+            index
+        );
+    }
+}
+
 export const assignNoiseToBoard = (state, { boardId, key, noise }) => {
 
     const index = getBoardIndex(state, boardId);

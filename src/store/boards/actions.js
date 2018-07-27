@@ -35,6 +35,19 @@ export const createBoard = ({ commit, state }, name) => {
         })
 }
 
+export const deleteBoard = ({ commit, state }, name) => {
+    
+    commit('deletingBoard', boardId)
+
+    return boardsRef
+        .doc(boardId)
+        .delete()
+        .then((response) => {
+            console.log(response);
+            commit('boardDeleted', boardId);
+            return response;
+        })
+}
 
 export const assignNoiseToBoard = ({ commit, state }, { boardId, key, name, source }) => {
 

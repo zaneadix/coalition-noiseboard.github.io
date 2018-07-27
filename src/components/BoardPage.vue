@@ -2,9 +2,48 @@
 <template>
     <div id="board-page" class="container-fluid">
         <div class="page-wrapper" v-if="board">
-            <div class="header">
-                <h1 class="name">{{ board.name }}</h1>
+
+            <div class="modal-container delete-modal" v-if="showDelete">
+                <div class="modal">
+                    <h3 class="title">
+                        Delete "{{ board.name }}"?
+                    </h3>
+                    <div class="body">
+                        <h6>Are you sure as fuck?</h6>
+                        <div class="inline-group">
+                            <button
+                                class="btn btn-primary"
+                                v-on:click="deleteThisBoard()">
+                                Yeah, do it
+                            </button>
+                            <button
+                                class="btn btn-secondary"
+                                v-on:click="showDelete=false">
+                                Don't do it
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+            <div class="header">
+                <div class="edit-wrapper">
+                    <h1 class="name">{{ board.name }}</h1>
+                    <div class="actions">
+                        <button class="icon-button">
+                            <svg class="icon">
+                                <use xlink:href="#icon-edit"></use>
+                            </svg>
+                        </button>
+                        <button class="icon-button" v-on:click="showDelete=true">
+                            <svg class="icon">
+                                <use xlink:href="#icon-trash"></use>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
             <Board
                 :model="board"
                 v-on:noise-clicked="displayNoiseEditor($event)"
@@ -55,7 +94,8 @@
 
         data: function () {
             return {
-                selected: null
+                selected: null,
+                showDelete: false
             }
         },
         
@@ -81,7 +121,10 @@
 
         methods: {
 
-            ...mapActions(['saveBoardNoiseDefaults']),
+            ...mapActions([
+                'saveBoardNoiseDefaults',
+                'deleteBoard'
+            ]),
 
             displayNoiseEditor: function (key) {
                 this.selected = {
@@ -91,9 +134,14 @@
             },
 
             saveSettings: function (key) {
-                console.log('save', key);
-                console.log(this.board);
                 this.saveBoardNoiseDefaults({ boardId: this.board.id, key })
+            },
+
+            deleteThisBoard: function () {
+                this.deleteBoard(this.board.id)
+                    .then(function (response) {
+                        console.log(response);
+                    })
             }
         }
     }
@@ -119,19 +167,43 @@
                 justify-content: center;
                 margin-bottom: 40px;
 
-                h1 {
-                    text-align: center;
-                    margin-bottom: 0;
+                .edit-wrapper {
+                    position: relative;
                     margin-top: auto;
+                    .actions {
+                        position: absolute;
+                        top: 0;
+                        left: 100%;
+                        display: flex;
+                        // padding-left: 1rem;
+
+                        button {
+                            display: inline-block;
+                            margin-left: 1rem;
+                        }
+                    }
+                }
+
+                h1 {
+                    // text-align: center;
+                    margin-bottom: 0;
                     font-size: 2rem;
                     line-height: 2rem;
-            
                 }
             }
 
             .noise-editor-container {
                 margin-top: auto;
                 background-color: #fff;
+            }
+        }
+
+        .delete-modal {
+            .body {
+                flex-direction: column;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
         }
     }

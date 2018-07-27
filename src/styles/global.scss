@@ -47,11 +47,24 @@ button {
         position: relative;
         background-color: $white;
         border-radius: 3px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
 
         .title {
             text-align: center;
             padding: 1.5rem 0;
             margin-bottom: 0;
+        }
+    }
+}
+
+.inline-group {
+    * {
+        display: inline-block;
+        &:not(:last-child) {
+            margin-right: 1rem;
         }
     }
 }
