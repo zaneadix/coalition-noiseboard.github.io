@@ -170,6 +170,7 @@ export class Noise {
     }
 
     set color (color) {
+        console.log('setting', color)
         this.settings.color = color;
         this.haveSettingsChanged('color');
     }

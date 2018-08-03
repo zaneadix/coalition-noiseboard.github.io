@@ -93,6 +93,10 @@
 <style lang="scss" scoped="true">
 
     @import '../styles/variables';
+
+    .boards-list {
+        overflow: hidden;
+    }
     
     .title {
         display: flex;

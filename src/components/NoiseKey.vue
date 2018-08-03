@@ -38,8 +38,8 @@
         data: function () {
             return {
                 pressed: false,
-                color: '',
-                playbackPercentages: []
+                playbackPercentages: [],
+                color: ''
             }
         },
 
@@ -47,18 +47,18 @@
             noise: {
                 deep: true,
                 handler: function (newVal, oldVal) {
+                    this.setColor(newVal);
                     if (newVal) {
                         this.playbackPercentages = newVal.playbackPercentages;
-                        this.color = newVal.color;
                     } else {
                         this.playbackPercentages = [];
-                        this.color = '';
                     }
                 }
             }
         },
 
         created: function () {
+            this.setColor(this.noise);
             document.addEventListener('keydown', this.checkPress);
             document.addEventListener('keyup', this.checkRelease);
         },
@@ -69,6 +69,14 @@
         },
 
         methods: {
+
+            setColor: function (noise) {
+                if (noise) {
+                    this.color = noise.color;
+                } else {
+                    this.color = '';
+                }
+            },
 
             checkClick: function () {
                 if (this.noise) {

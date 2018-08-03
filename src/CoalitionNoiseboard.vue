@@ -2,16 +2,6 @@
 <template>
     <div id="coalition-noiseboard">
 
-<!--         <button
-            class="save icon-button"
-            :disabled="!dirty"
-            v-bind:class="{ 'pulse': dirty }"
-            v-on:click="saveBoards()">
-            <svg class="icon">
-                <use xlink:href="#icon-save"></use>
-            </svg>
-        </button> -->
-
         <div class="loading-cover" :class="{active: loading}">
             <h2>Loading Stuff</h2>
         </div>
@@ -22,7 +12,7 @@
                 class="icon-button toggle-sidebar"
                 v-on:click="sidebarClosed = !sidebarClosed">
                 <svg class="icon">
-                    <use xlink:href="#icon-x-circle"></use>
+                    <use :xlink:href="sidebarClosed ? '#icon-arrow-right-circle' : '#icon-arrow-left-circle'"></use>
                 </svg>
             </button>
 

@@ -138,18 +138,22 @@ button {
         width: 220px;
         flex-shrink: 0;
         border-right: 1px solid $shadow;
-        overflow: hidden;
+        // overflow: hidden;
         position: relative;
 
         .toggle-sidebar {
             position: absolute;
-            top: .3rem;
-            right: .3rem;
+            top: 1rem;
+            left: 100%;
+            padding: .5rem;
+            border: 1px solid $shadow;
+            border-left: 1px solid $white;
+            // margin-left: -1px;
         }
 
         &.closed {
             width: 30px;
-            .brand, ul {
+            .brand, .brand .logo, .brand .name, ul {
                 display: none;
             }
         }
@@ -215,7 +219,6 @@ button {
             .key-body {
                 background-color: $black;
                 color: #FFF;
-                // box-shadow: 2px 2px 4px rgba(255,75,56, 0.25), -2px 2px 4px rgba(255,75,56, 0.25);
                 .character {
                     color: #FFF;
                     font-weight: bold;
@@ -232,7 +235,6 @@ button {
             position: relative;
             background-color: #FFF;
             border-radius: 3px;
-            // box-shadow: 2px 2px 4px rgba(0,0,0,.1), -2px 2px 4px rgba(0,0,0,.1);
             align-items: center;
             justify-content: center;
             padding: .3rem;
@@ -276,13 +278,10 @@ button {
 
             &.active {
                 .key-body {
-                    // box-shadow: 4px 4px 6px rgba($color, 0.8), -4px 4px 6px rgba($color, 0.8);
                     background-color: $color;
                     color: #FFF;
                     .character {
                         color: #FFF;
-                        // font-size: 90%;
-                        // font-weight: bold;
                     }
                 }
             }
