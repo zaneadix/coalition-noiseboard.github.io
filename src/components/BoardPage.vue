@@ -28,9 +28,15 @@
 
             <div class="header">
                 <div class="edit-wrapper">
-                    <h1 class="name">{{ board.name }}</h1>
+                    <h1 class="name" v-if="!showEdit">{{ board.name }}</h1>
+                    <input v-if="showEdit"
+                        type="text"
+                        v-model="nameFieldValue"
+                        @focus="nameFieldHasFocus = true"
+                        @blur="nameFieldHasFocus = false"
+                        :autoFocus="showEdit">
                     <div class="actions">
-                        <button class="icon-button">
+                        <button class="icon-button" v-on:click="showEdit = !showEdit">
                             <svg class="icon">
                                 <use xlink:href="#icon-edit"></use>
                             </svg>
@@ -47,7 +53,8 @@
             <Board
                 :model="board"
                 v-on:noise-clicked="displayNoiseEditor($event)"
-                interactive="true">
+                interactive="true"
+                :off="nameFieldHasFocus">
             </Board>
             
             <div class="noise-editor-container" v-if="selected">
@@ -95,8 +102,16 @@
         data: function () {
             return {
                 selected: null,
-                showDelete: false
+                showDelete: false,
+                showEdit: false,
+                nameFieldHasFocus: false,
+                boardId: '',
+                nameFieldValue: ''
             }
+        },
+
+        created: function () {
+            window.addEventListener('keyup', this.checkPress);
         },
         
         beforeRouteUpdate: function (to, from, next) {
@@ -107,13 +122,22 @@
         computed: {
             ...mapState({
                 board: function (state) {
+
                     const id = this.$route.params.id;
+
                     const board = find(state.boards, (board) => {
                         return board.id === id;
                     });
+
                     if (board) {
                         document.title = board.name;
+
+                        if (this.boardId !== board.id) {
+                            this.boardId = board.id;
+                            this.nameFieldValue = board.name.substring();
+                        }
                     }
+
                     return board;
                 }
             })
@@ -123,6 +147,7 @@
 
             ...mapActions([
                 'saveBoardNoiseDefaults',
+                'editBoardName',
                 'deleteBoard'
             ]),
 
@@ -139,10 +164,27 @@
 
             deleteThisBoard: function () {
                 this.deleteBoard(this.board.id)
-                    .then(function (response) {
-                        console.log(response);
+                    .then((response) => {
+                        if (response.success) {
+                            this.$router.push({ name: 'noise-inventory' });
+                        }
                     })
-            }
+            },
+
+            checkPress: function (event) {
+
+                if (this.nameFieldHasFocus && event.key === 'Enter') {
+                    this.editBoardName({
+                        boardId: this.boardId,
+                        boardName: this.nameFieldValue
+                    });
+                    this.showEdit = false;
+                }
+
+                if (this.nameFieldHasFocus && event.key === 'Escape') {
+                    this.showEdit = false;
+                }
+            },
         }
     }
 

@@ -16,6 +16,8 @@
             <span v-if="noise" class="noise-name">{{ noise.name }}</span>
             <small v-else class="soft-text">empty</small>
 
+            <div class="spinner" :class="{active: noise && noise.loading}"></div>
+
         </div>
     </div>
     
@@ -32,7 +34,8 @@
         
         props: [
             'character',
-            'noise'
+            'noise',
+            'off'
         ],
 
         data: function () {
@@ -86,17 +89,20 @@
 
             checkPress: function (event) {
 
-                const keyPressed = (event.keyCode === KEY_MAP[this.character]);
-                const shift = event.shiftKey;
+                if (!this.off) {
 
-                if (keyPressed) {
-                    this.pressed = true;
-                }
+                    const keyPressed = (event.keyCode === KEY_MAP[this.character]);
+                    const shift = event.shiftKey;
 
-                if (shift && this.pressed) {
-                    this.stopNoise();
-                } else if (this.pressed) {
-                    this.playNoise();
+                    if (keyPressed) {
+                        this.pressed = true;
+                    }
+
+                    if (shift && this.pressed) {
+                        this.stopNoise();
+                    } else if (this.pressed) {
+                        this.playNoise();
+                    }
                 }
             },
 
@@ -137,6 +143,12 @@
             background-color: #000;
             opacity: .05;
             z-index: 0;
+        }
+
+        .spinner {
+            position: absolute;
+            bottom: .2rem;
+            left: .2rem;
         }
     }
 

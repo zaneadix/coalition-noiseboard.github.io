@@ -130,195 +130,230 @@ button {
     }
 }
 
-// #coalition-noiseboard {
+@keyframes spinner-frames {
+    0% {
+        -webkit-transform: rotate(0deg);
+           -moz-transform: rotate(0deg);
+             -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+    }
+    50% {
+        -webkit-transform: rotate(180deg);
+           -moz-transform: rotate(180deg);
+             -o-transform: rotate(180deg);
+                transform: rotate(180deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+           -moz-transform: rotate(360deg);
+             -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+    }
+}
 
+.spinner {
+    &:after {
+        display: none;
+        content: ' ';
+        height: .8rem;
+        width: .8rem;
+        border: 1px solid $black;
+        border-top-color: transparent;
+        border-radius: 50%;
+        background: transparent;
+        box-sizing: border-box;
+        animation: spinner-frames .75s linear infinite;
+    }
+    &.active:after {
+        display: block;
+    }
+}
 
+.sidebar {
+    width: 220px;
+    flex-shrink: 0;
+    border-right: 1px solid $shadow;
+    position: relative;
 
-    .sidebar {
-        width: 220px;
-        flex-shrink: 0;
-        border-right: 1px solid $shadow;
-        // overflow: hidden;
-        position: relative;
+    .toggle-sidebar {
+        position: absolute;
+        top: 1rem;
+        left: 100%;
+        padding: .5rem;
+        border: 1px solid $shadow;
+        border-left: 1px solid $white;
+        background-color: $white;
+        z-index: 200;
+    }
 
-        .toggle-sidebar {
-            position: absolute;
-            top: 1rem;
-            left: 100%;
-            padding: .5rem;
-            border: 1px solid $shadow;
-            border-left: 1px solid $white;
-            // margin-left: -1px;
+    &.closed {
+        width: 30px;
+        .brand, .brand .logo, .brand .name, ul {
+            display: none;
+        }
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+
+        li.title {
+            // padding: 0 1rem;
+            padding-left: 1rem;
         }
 
-        &.closed {
-            width: 30px;
-            .brand, .brand .logo, .brand .name, ul {
-                display: none;
-            }
-        }
-
-        ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-
-            li.title {
-                // padding: 0 1rem;
+        li {
+            margin-bottom: .5rem;
+            a {
                 padding-left: 1rem;
-            }
-
-            li {
-                margin-bottom: .5rem;
-                a {
-                    padding-left: 1rem;
-                    display: inline-block;
-                    width: 100%;
-                    &.router-link-exact-active {
-                        color: $white;
-                        text-decoration: none;
-                        background-color: $red;
-                        font-weight: 600;
-                    }
+                display: inline-block;
+                width: 100%;
+                &.router-link-exact-active {
+                    color: $white;
+                    text-decoration: none;
+                    background-color: $red;
+                    font-weight: 600;
                 }
             }
         }
     }
+}
 
-    .content {
-        flex-grow: 1;
-        overflow-y: scroll;
+.content {
+    flex-grow: 1;
+    overflow-y: scroll;
+}
+
+nav {
+    background-color: #FFF;
+    box-shadow: 0px 2px 4px rgba(0,0,0,.1);
+}
+
+.inline-field {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 2rem;
+
+    label {
+        margin: 0 .5rem 0 0;
     }
+}
 
-    nav {
-        background-color: #FFF;
-        box-shadow: 0px 2px 4px rgba(0,0,0,.1);
-    }
+.key {
+    height: 4rem;
+    width: 10%;
+    margin-right: .5rem;
+    padding: 0;
+    border-radius: 3px;
 
-    .inline-field {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        margin-bottom: 2rem;
+    &.active {
+        padding: 2px;
 
-        label {
-            margin: 0 .5rem 0 0;
+        .key-body {
+            background-color: $black;
+            color: #FFF;
+            .character {
+                color: #FFF;
+                font-weight: bold;
+            }
         }
     }
 
-    .key {
-        height: 4rem;
-        width: 10%;
-        margin-right: .5rem;
-        padding: 0;
+    .key-body {
+        border: 1px solid $shadow;
+        position: relative;
+        cursor: pointer;
+        display: flex;
+        height: 100%;
+        position: relative;
+        background-color: #FFF;
         border-radius: 3px;
+        align-items: center;
+        justify-content: center;
+        padding: .3rem;
+        text-align: center;
+        font-weight: 700;
+
+        .noise-name {
+            font-size: .7rem;
+        }
+
+        .character {
+            display: block;
+            position: absolute;
+            color: $slate;
+            content: '';
+            top: 5px;
+            left: 5px;
+            font-size: 80%;
+            line-height: 80%;
+            opacity: 1;
+            z-index: 1;
+            text-align: center;
+        }
+    }
+
+    @media only screen and (min-width: 1000px)  {
+        height: 5.5rem;
+
+        .key-body {
+            .noise-name {
+                font-weight: 700;
+                font-size: 1rem;
+            }
+        }
+    }
+
+    @mixin keyColor ($color) {
+        .key-body {
+            background-color: lighten($color, 32%);
+        }
 
         &.active {
-            padding: 2px;
-
             .key-body {
-                background-color: $black;
+                background-color: $color;
                 color: #FFF;
                 .character {
                     color: #FFF;
-                    font-weight: bold;
                 }
             }
-        }
-
-        .key-body {
-            border: 1px solid $shadow;
-            position: relative;
-            cursor: pointer;
-            display: flex;
-            height: 100%;
-            position: relative;
-            background-color: #FFF;
-            border-radius: 3px;
-            align-items: center;
-            justify-content: center;
-            padding: .3rem;
-            text-align: center;
-            font-weight: 700;
-
-            .noise-name {
-                font-size: .7rem;
-            }
-
-            .character {
-                display: block;
-                position: absolute;
-                color: $slate;
-                content: '';
-                top: 5px;
-                left: 5px;
-                font-size: 80%;
-                line-height: 80%;
-                opacity: 1;
-                z-index: 1;
-                text-align: center;
-            }
-        }
-
-        @media only screen and (min-width: 1000px)  {
-            height: 5.5rem;
-
-            .key-body {
-                .noise-name {
-                    font-weight: 700;
-                    font-size: 1rem;
-                }
-            }
-        }
-
-        @mixin keyColor ($color) {
-            .key-body {
-                background-color: lighten($color, 32%);
-            }
-
-            &.active {
-                .key-body {
-                    background-color: $color;
-                    color: #FFF;
-                    .character {
-                        color: #FFF;
-                    }
-                }
-            }
-        }
-
-        &.red {
-            @include keyColor($key-red);
-        }
-
-        &.orange {
-            @include keyColor($key-orange);
-        }
-
-        &.yellow {
-            @include keyColor($key-yellow);
-        }
-
-        &.green {
-            @include keyColor($key-green);
-        }
-
-        &.turqoise {
-            @include keyColor($key-turqoise);
-        }
-
-        &.blue {
-            @include keyColor($key-blue);
-        }
-
-        &.royal {
-            @include keyColor($key-royal);
-        }
-
-        &.purple {
-            @include keyColor($key-purple);
         }
     }
+
+    &.red {
+        @include keyColor($key-red);
+    }
+
+    &.orange {
+        @include keyColor($key-orange);
+    }
+
+    &.yellow {
+        @include keyColor($key-yellow);
+    }
+
+    &.green {
+        @include keyColor($key-green);
+    }
+
+    &.turqoise {
+        @include keyColor($key-turqoise);
+    }
+
+    &.blue {
+        @include keyColor($key-blue);
+    }
+
+    &.royal {
+        @include keyColor($key-royal);
+    }
+
+    &.purple {
+        @include keyColor($key-purple);
+    }
+}
 
 
 .container, .container-fluid {

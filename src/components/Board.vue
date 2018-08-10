@@ -12,6 +12,7 @@
                             :noise="model.keys[key]"
                             :key="key"
                             :character="key"
+                            :off="off"
                             v-on:noise-clicked="$emit('noise-clicked', $event)">
                         </NoiseKey>
                     </div>
@@ -60,14 +61,11 @@
             },
             interactive: {
                 default: false
+            },
+            off: {
+                default: false
             }
         },
-
-        // watch: {
-        //     model: function (model) {
-        //         console.log('setting model', model)
-        //     }
-        // },
 
         data: () => {
             return {

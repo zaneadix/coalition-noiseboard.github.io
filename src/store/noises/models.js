@@ -137,6 +137,16 @@ export class Noise {
     }
 
 
+    get loading () {
+        let loading = false;
+        if (this.howl) {
+            // console.log(this.howl.state());
+            loading = (this.howl.state() === 'loading');
+        }
+        return loading;
+    }
+
+
     get defaults () {
         return this._defaults;
     }
@@ -170,7 +180,6 @@ export class Noise {
     }
 
     set color (color) {
-        console.log('setting', color)
         this.settings.color = color;
         this.haveSettingsChanged('color');
     }

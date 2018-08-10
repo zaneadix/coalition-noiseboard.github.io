@@ -35,7 +35,7 @@ export const createBoard = ({ commit, state }, name) => {
         })
 }
 
-export const deleteBoard = ({ commit, state }, name) => {
+export const deleteBoard = ({ commit, state }, boardId) => {
     
     commit('deletingBoard', boardId)
 
@@ -43,9 +43,27 @@ export const deleteBoard = ({ commit, state }, name) => {
         .doc(boardId)
         .delete()
         .then((response) => {
-            console.log(response);
             commit('boardDeleted', boardId);
-            return response;
+            return { success: true };
+        })
+        .catch((error) => {
+            console.error('Delete failed', error);
+        })
+}
+
+export const editBoardName = ({ commit, state }, { boardId, boardName }) => {
+    
+    commit('editingBoardName', boardId);
+
+    return boardsRef
+        .doc(boardId)
+        .set({ name: boardName }, { merge: true })
+        .then((response) => {
+            commit('boardNameEdited', { boardId, boardName });
+            return { success: true };
+        })
+        .catch((error) => {
+            console.error('Board Name Edit Failed', error);
         })
 }
 

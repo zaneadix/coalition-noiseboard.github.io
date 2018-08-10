@@ -50,6 +50,37 @@ export const boardDeleted = (state, boardId) => {
     }
 }
 
+export const editingBoardName = (state, boardId) => {
+
+    const index = getBoardIndex(state, boardId);
+
+    if (index >= 0) {
+        Vue.set(
+            state.boards[index],
+            'editing',
+            true
+        );
+    }
+}
+
+export const boardNameEdited = (state, { boardId, boardName }) => {
+
+    const index = getBoardIndex(state, boardId);
+
+    if (index >= 0) {
+        Vue.set(
+            state.boards[index],
+            'name',
+            boardName
+        );
+        Vue.set(
+            state.boards[index],
+            'editing',
+            false
+        );
+    }
+}
+
 export const assignNoiseToBoard = (state, { boardId, key, noise }) => {
 
     const index = getBoardIndex(state, boardId);
