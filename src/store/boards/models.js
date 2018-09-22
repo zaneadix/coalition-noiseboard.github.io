@@ -25,6 +25,13 @@ export class Board {
         }
     }
 
+    loadSources () {
+        mapKeys(this.keys, (value, key) => {
+            const noise = this.keys[key];
+            noise && noise.loadSource();
+        })
+    }
+
     get saveData () {
 
         const keySaves = {};

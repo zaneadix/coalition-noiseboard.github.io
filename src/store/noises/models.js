@@ -50,8 +50,13 @@ export class Noise {
             rate: 100,
             solo: false,
             volume: 100,
-            color: 'white'
+            color: 'white',
+            preload: false
         };
+    }
+
+    loadSource () {
+        this.howl.load();
     }
 
     play () {
@@ -140,7 +145,6 @@ export class Noise {
     get loading () {
         let loading = false;
         if (this.howl) {
-            // console.log(this.howl.state());
             loading = (this.howl.state() === 'loading');
         }
         return loading;
@@ -273,13 +277,12 @@ export class Noise {
 
     static fromData (data) {
         
-        const noise = new Noise();
+        const noise = new Noise({ preload: false });
         const returnValue = Object.assign(
             noise,
             data,
             data.defaults
         );
-
 
         return returnValue;
     }

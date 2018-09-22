@@ -1,0 +1,13 @@
+@import '../styles/variables';
+
+.key-body {
+    .unassigner {
+        position: absolute;
+        top: 3px;
+        right: 3px;
+        svg {
+            height: 1rem;
+            width: 1rem;
+        }
+    }
+}

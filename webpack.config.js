@@ -1,7 +1,7 @@
 const path = require('path');
-const CopyPlugin = require("copy-webpack-plugin");
+const webpack = require('webpack');
 
-module.exports = {
+let config = {
     devtool: 'none',
     output: {
         path: path.resolve(__dirname, 'docs'),
@@ -33,16 +33,20 @@ module.exports = {
             }
         ]
     },
-    // plugins: [
-    //     new CopyPlugin([{
-    //         from: 'src/assets',
-    //         to: 'docs/assets',
-    //         // flatten: true,
-    //         // toType: 'file'
-    //     }])
-    // ],
     devServer: {
         contentBase: 'docs',
         historyApiFallback: true
     }
 };
+
+// console.log(process.env.NODE_ENV);
+
+// if (process.env.NODE_ENV === 'production') {
+//     config = Object.assign(config, {
+//         optimization: {
+//             minimize: true
+//         }
+//     })
+// }
+
+module.exports = config;

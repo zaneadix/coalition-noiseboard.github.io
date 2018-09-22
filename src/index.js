@@ -6,6 +6,9 @@ import NoiseInventory from './components/NoiseInventory.vue';
 import BoardPage from './components/BoardPage.vue';
 import store from './store';
 
+/**
+ * This is a docs comment
+ */
 const router = new VueRouter({
     mode: 'history',
     routes: [{

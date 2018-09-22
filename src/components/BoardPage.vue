@@ -110,6 +110,12 @@
             }
         },
 
+        watch: {
+            board: (board) => {
+                board.loadSources();
+            }
+        },
+
         created: function () {
             window.addEventListener('keyup', this.checkPress);
         },
