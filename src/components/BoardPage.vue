@@ -1,77 +1,61 @@
 
 <template>
-    <div id="board-page" class="container-fluid">
-        <div class="page-wrapper" v-if="board">
+  <div id="board-page" class="container-fluid">
+    <div class="page-wrapper" v-if="board">
 
-            <div class="modal-container delete-modal" v-if="showDelete">
-                <div class="modal">
-                    <h3 class="title">
-                        Delete "{{ board.name }}"?
-                    </h3>
-                    <div class="body">
-                        <h6>Are you sure as fuck?</h6>
-                        <div class="inline-group">
-                            <button
-                                class="btn btn-primary"
-                                v-on:click="deleteThisBoard()">
-                                Yeah, do it
-                            </button>
-                            <button
-                                class="btn btn-secondary"
-                                v-on:click="showDelete=false">
-                                Don't do it
-                            </button>
-                        </div>
-                    </div>
-                </div>
+      <div class="modal-container delete-modal" v-if="showDelete">
+        <div class="modal">
+          <h3 class="title">
+            Delete "{{ board.name }}"?
+          </h3>
+          <div class="body">
+            <h6>Are you sure as fuck?</h6>
+            <div class="inline-group">
+              <button class="btn btn-primary" v-on:click="deleteThisBoard()">
+                Yeah, do it
+              </button>
+              <button class="btn btn-secondary" v-on:click="showDelete=false">
+                Don't do it
+              </button>
             </div>
-
-            <div class="header">
-                <div class="edit-wrapper">
-                    <h1 class="name" v-if="!showEdit">{{ board.name }}</h1>
-                    <input v-if="showEdit"
-                        type="text"
-                        v-model="nameFieldValue"
-                        @focus="nameFieldHasFocus = true"
-                        @blur="nameFieldHasFocus = false"
-                        :autoFocus="showEdit">
-                    <div class="actions">
-                        <button class="icon-button" v-on:click="showEdit = !showEdit">
-                            <svg class="icon">
-                                <use xlink:href="#icon-edit"></use>
-                            </svg>
-                        </button>
-                        <button class="icon-button" v-on:click="showDelete=true">
-                            <svg class="icon">
-                                <use xlink:href="#icon-trash"></use>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <Board
-                :model="board"
-                v-on:noise-clicked="displayNoiseEditor($event)"
-                interactive="true"
-                :off="nameFieldHasFocus">
-            </Board>
-            
-            <div class="noise-editor-container" v-if="selected">
-                
-                <NoiseEditor
-                    :noise="selected.noise"
-                    :character="selected.key"
-                    v-on:save-settings="saveSettings($event)">
-                </NoiseEditor>
-
-            </div>
-
+          </div>
         </div>
-        <div v-else class="header">
-            <h1>Nope.</h1>
+      </div>
+
+      <div class="header">
+        <div class="edit-wrapper">
+          <h1 class="name" v-if="!showEdit">{{ board.name }}</h1>
+          <input v-if="showEdit" type="text" v-model="nameFieldValue" @focus="focusNameField()" @blur="blurNameField()" :autoFocus="showEdit">
+          <div class="actions">
+            <button class="icon-button" v-on:click="showEdit = !showEdit">
+              <svg class="icon">
+                <use xlink:href="#icon-edit"></use>
+              </svg>
+            </button>
+            <button class="icon-button" v-on:click="showDelete=true">
+              <svg class="icon">
+                <use xlink:href="#icon-trash"></use>
+              </svg>
+            </button>
+          </div>
         </div>
+      </div>
+
+      <Board :model="board" v-on:noise-clicked="displayNoiseEditor($event)" interactive="true">
+      </Board>
+
+      <div class="noise-editor-container" v-if="selected">
+
+        <NoiseEditor :noise="selected.noise" :character="selected.key" v-on:save-settings="saveSettings($event)">
+        </NoiseEditor>
+
+      </div>
+
     </div>
+    <div v-else class="header">
+      <h1>Nope.</h1>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -148,7 +132,13 @@ export default {
   },
 
   methods: {
-    ...mapActions(["saveBoardNoiseDefaults", "editBoardName", "deleteBoard"]),
+    ...mapActions([
+      "disableNoises",
+      "enableNoises",
+      "saveBoardNoiseSettings",
+      "editBoardName",
+      "deleteBoard"
+    ]),
 
     displayNoiseEditor: function(key) {
       this.selected = {
@@ -157,8 +147,8 @@ export default {
       };
     },
 
-    saveSettings: function(key) {
-      this.saveBoardNoiseDefaults({ boardId: this.board.id, key });
+    saveSettings: function(update) {
+      this.saveBoardNoiseSettings({ boardId: this.board.id, ...update });
     },
 
     deleteThisBoard: function() {
@@ -167,6 +157,16 @@ export default {
           this.$router.push({ name: "noise-inventory" });
         }
       });
+    },
+
+    focusNameField: function() {
+      this.nameFieldHasFocus = true;
+      this.disableNoises();
+    },
+
+    blurNameField: function() {
+      this.nameFieldHasFocus = false;
+      this.enableNoises();
     },
 
     checkPress: function(event) {

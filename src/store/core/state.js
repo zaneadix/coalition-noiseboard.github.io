@@ -1,4 +1,5 @@
 export default {
-    dirty: false,
-    loadingAppData: true
-}
+  dirty: false,
+  loadingAppData: true,
+  disableNoises: false
+};

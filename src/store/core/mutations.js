@@ -1,11 +1,13 @@
-import Vue from 'vue';
+import Vue from "vue";
 
-// export const hydrate = (state, payload) => {
-//     for (let key of Object.keys(payload)) {
-//         Vue.set(state, key, Object.assign({}, state[key], payload[key]));
-//     }
-// }
+export const appDataLoaded = state => {
+  Vue.set(state, "loadingAppData", false);
+};
 
-export const appDataLoaded = (state, payload) => {
-    Vue.set(state, 'loadingAppData', false);
-}
+export const disableNoises = state => {
+  Vue.set(state, "disableNoises", true);
+};
+
+export const enableNoises = state => {
+  Vue.set(state, "disableNoises", false);
+};
