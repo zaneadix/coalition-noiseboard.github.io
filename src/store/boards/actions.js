@@ -97,7 +97,7 @@ export const saveBoardNoiseSettings = (
 
   const update = {};
   update[`keys.${key}.name`] = name;
-  update[`keys.${key}.defaults`] = noise.defaults;
+  update[`keys.${key}.defaults`] = noise.settings;
 
   boardsRef
     .doc(boardId)
@@ -107,7 +107,7 @@ export const saveBoardNoiseSettings = (
         boardId,
         key,
         name,
-        defaults: noise.defaults
+        defaults: noise.settings
       });
     });
 };
