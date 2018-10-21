@@ -1,10 +1,7 @@
-import find from "lodash/find";
 import findIndex from "lodash/findIndex";
 import map from "lodash/map";
-import mapKeys from "lodash/mapKeys";
 import firebase from "firebase/app";
-import { repo, firestore } from "../db";
-import { Howl } from "howler";
+import { firestore } from "../db";
 import { Board } from "./models";
 import { Noise } from "../noises/models";
 
@@ -57,7 +54,7 @@ export const editBoardName = ({ commit, state }, { boardId, boardName }) => {
 };
 
 export const assignNoiseToBoard = (
-  { commit, state },
+  { commit },
   { boardId, key, name, source }
 ) => {
   const noise = Noise.fromData({ name, source });
@@ -72,7 +69,7 @@ export const assignNoiseToBoard = (
     });
 };
 
-export const unassignNoiseFromBoard = ({ commit, state }, { boardId, key }) => {
+export const unassignNoiseFromBoard = ({ commit }, { boardId, key }) => {
   const update = {};
   update[`keys.${key}`] = firebase.firestore.FieldValue.delete();
 
