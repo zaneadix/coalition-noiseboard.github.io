@@ -30,7 +30,7 @@
         >
       </li>
       <li v-for="board in boards">
-        <router-link :to="'board/'+board.id">{{board.name}}</router-link>
+        <router-link :to="'coalition-noiseboard/board/'+board.id">{{board.name}}</router-link>
       </li>
     </ul>
   </div>
