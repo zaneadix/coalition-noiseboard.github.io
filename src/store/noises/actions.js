@@ -15,7 +15,7 @@ export const parseNoises = ({ commit, state }, tree) => {
         const category = segments[1];
         const name = segments[2].replace(/\.\w{3}/, '');
         noiseMap[category] = noiseMap[category] || [];
-        noiseMap[category].push(NoisePreview.fromData({ name, category, source: `${path}` }));
+        noiseMap[category].push(NoisePreview.fromData({ name, category, source: `/${path}` }));
     });
     
     commit('setNoises', noiseMap);
