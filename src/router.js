@@ -3,6 +3,7 @@ import NoiseInventory from "./components/NoiseInventory.vue";
 import BoardPage from "./components/BoardPage.vue";
 
 const router = new VueRouter({
+  base: 'coalition-noiseboard',
   mode: "history",
   routes: [
     {
